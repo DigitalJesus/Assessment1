@@ -14,7 +14,9 @@ import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -31,14 +33,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         checkForSavedStudentID();
-        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
-        TextView title = (TextView) findViewById(R.id.timetable_title);
-        title.setText(mPrefs.getString("studentID", "Timetable"));
+        startTimetableActivity();
 
-        startTimetable();
+
     }
 
-    private void startTimetable() {
+
+    private void startTimetableActivity() {
+//      Set title bar text to student ID
+        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
+        TextView title = (TextView) findViewById(R.id.timetable_title);
+        title.setText(mPrefs.getString("studentID", ""));
+
         String weekDayIndex[] = {"mon_hr", "tues_hr", "wed_hr", "thurs_hr", "fri_hr"};
 
         dbHelper = new DBHelper(this);
@@ -100,10 +106,34 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
-
     }
 
-    private void toastMessage(String message){
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.timetable_screen_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.changeStudentID:
+                Intent login = new Intent(this, LoginActivity.class);
+                startActivity(login);
+                break;
+            case R.id.editTimetable:
+                Intent editTimetable = new Intent(this, EditTimetable.class);
+                startActivity(editTimetable);
+                break;
+            default:
+                //ignore
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+        private void toastMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

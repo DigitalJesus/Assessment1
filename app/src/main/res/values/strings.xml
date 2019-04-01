@@ -8,4 +8,6 @@
     <string name="studentID">Student ID</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="times">8</string>
+    <string name="changeStudentID">Change Student ID</string>
+    <string name="editTimetable">Edit Timetable</string>
 </resources>
