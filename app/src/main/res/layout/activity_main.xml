@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainactivityID"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    tools:context=".MainActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/app_bar" />
+
+    <LinearLayout
+        android:layout_width="407dp"
+        android:layout_height="634dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:weightSum="5"
+        android:baselineAligned="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintVertical_bias="1.0">
+
+        <!--Hour Numbers-->
+        <LinearLayout
+            android:layout_width="17dp"
+            android:layout_height="match_parent"
+            android:weightSum="10"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textColor="@color/secondaryTextColour"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!--Monday-->
+        <LinearLayout
+            android:id="@+id/monday_column"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:orientation="vertical"
+            android:weightSum="10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <TextView
+                android:id="@+id/mon_hr1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr3"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr4"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr5"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr6"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr7"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr8"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr9"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr10"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+
+        </LinearLayout>
+
+        <!--Tuesday-->
+        <LinearLayout
+            android:id="@+id/tuesday_column"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:orientation="vertical"
+            android:weightSum="10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <TextView
+                android:id="@+id/tues_hr1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr3"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr4"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr5"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr6"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr7"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr8"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr9"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr10"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+
+        </LinearLayout>
+
+        <!--Wednesday-->
+        <LinearLayout
+            android:id="@+id/wednesday_column"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:orientation="vertical"
+            android:weightSum="10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <TextView
+                android:id="@+id/wed_hr1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr3"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr4"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr5"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr6"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr7"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr8"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr9"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr10"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+
+        </LinearLayout>
+
+        <!--Thursday-->
+        <LinearLayout
+            android:id="@+id/thursday_column"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:orientation="vertical"
+            android:weightSum="10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <TextView
+                android:id="@+id/thurs_hr1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr3"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr4"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr5"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr6"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr7"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr8"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr9"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr10"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+
+        </LinearLayout>
+
+        <!--Friday-->
+        <LinearLayout
+            android:id="@+id/friday_column"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:orientation="vertical"
+            android:weightSum="10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <TextView
+                android:id="@+id/fri_hr1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr3"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr4"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr5"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr6"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr7"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr8"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr9"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr10"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

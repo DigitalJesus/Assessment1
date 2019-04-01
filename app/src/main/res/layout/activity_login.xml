@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:theme="@style/customToolbarStyle"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/bgColor">
+
+    <TextView
+        android:id="@+id/helloText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/activity1_display_message"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/numberInput"
+        android:textColor="@color/textColor"
+        android:textSize="30sp"
+        />
+
+    <EditText
+        android:id="@+id/numberInput"
+        android:backgroundTint="@color/teal"
+        android:textColor="@color/textColor"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:inputType="number"
+
+        />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_button"
+        android:layout_below="@+id/numberInput"
+        android:layout_centerHorizontal="true"/>
+
+
+
+</RelativeLayout>

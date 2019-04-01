@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Assessment 1</string>
+    <string name="activity1_display_message">Enter Student ID:</string>
+    <string name="activity2_display_message">This is where the things will be</string>
+    <string name="login_button">Login</string>
+    <string name="back_button">Back to login</string>
+    <string name="timetable_title">Timetable for </string>
+    <string name="studentID">Student ID</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="times">8</string>
+</resources>
