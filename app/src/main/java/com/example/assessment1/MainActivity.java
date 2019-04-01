@@ -1,25 +1,15 @@
 package com.example.assessment1;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
 
         checkForSavedStudentID();
         startTimetableActivity();
@@ -89,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     private String getClassName(int classID) {
         String classNames[] = {"Mobile App", "Math", "Embedded Sys", "Sys Analysis"};
         //                          0           1           2                3
-
         return classNames[classID];
     }
 
