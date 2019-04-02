@@ -12,9 +12,10 @@
         android:id="@+id/include"
         layout="@layout/app_bar" />
 
+    <!--Day Line-->
     <LinearLayout
         android:layout_width="390dp"
-        android:layout_height="22dp"
+        android:layout_height="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="0dp"
@@ -28,9 +29,39 @@
         app:layout_constraintVertical_bias="1.0">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="50sp"
             android:layout_height="wrap_content"
-
+            android:textSize="13sp"
+            android:text="Monday"
+            android:textColor="@color/secondaryTextColour"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="Tuesday"
+            android:textColor="@color/secondaryTextColour"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="Wednesday"
+            android:textColor="@color/secondaryTextColour"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="Thursday"
+            android:textColor="@color/secondaryTextColour"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="Friday"
+            android:textColor="@color/secondaryTextColour"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -41,7 +72,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="0dp"
         android:baselineAligned="false"
         android:weightSum="5"
         app:layout_constraintBottom_toBottomOf="parent"

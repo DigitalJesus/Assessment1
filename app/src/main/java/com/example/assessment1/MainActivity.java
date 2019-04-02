@@ -42,51 +42,53 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DBHelper(this);
 
-        int classTime[] = {5, 1, 2, 6, 8, 5, 1, 2, 6, 1};
-        int classDuration[] = {1, 1, 3, 2, 2, 2, 1, 2, 2, 1};
-        int classDay[] = {0, 1, 1, 1, 1, 2, 3, 3, 3, 4};
-        int classID[] = {0, 1, 0, 2, 3, 3, 1, 2, 1, 1};
+
+        int timetableData[][]= {
+                {0, 1, 0, 2, 3, 3, 1, 2, 1, 1}, // CourseID 0
+                {0, 1, 1, 1, 1, 2, 3, 3, 3, 4}, // Day      1
+                {5, 1, 2, 6, 8, 5, 1, 2, 6, 1}, // Time     2
+                {1, 1, 3, 2, 2, 2, 1, 2, 2, 1}  // Duration 3
+        };
+
         String classRoom[] = {"C304", "C117", "B106", "B107", "C305", "T403", "C117", "B107", "T403", "T401"};
-        String classTutor[] = {"", "", "", "", "", "", "", "", "", ""};
 
+        for (int i = 0; i < timetableData[0].length; i++) {
 
-        for (int i = 0; i < classTime.length; i++) {
-
-            String finalID = weekDayIndex[classDay[i]] + classTime[i];
+            String finalID = weekDayIndex[timetableData[1][i]] + timetableData[2][i];
 
             int resID = getResources().getIdentifier(finalID, "id", getPackageName());
             TextView selectedTime = ((TextView) findViewById(resID));
 
 //          This for loop colours in the hours after a class depending on the duration of the class.
-            for (int j = 0; j < (classDuration[i]); j++) {
-                String modifiedIDString = weekDayIndex[classDay[i]] + (classTime[i] + (j));
+            for (int j = 0; j < (timetableData[3][i]); j++) {
+                String modifiedIDString = weekDayIndex[timetableData[1][i]] + (timetableData[2][i] + (j));
                 int durationID = getResources().getIdentifier(modifiedIDString, "id", getPackageName());
                 TextView durationEdit = ((TextView) findViewById(durationID));
-                createTimetableBox("", "", "", getClassColor(classID[i]), durationEdit);
+                createTimetableBox("", "", getClassColor(timetableData[0][i]), durationEdit);
             }
 
-            createTimetableBox(getClassName(classID[i]), classRoom[i], classTutor[i], getClassColor(classID[i]), selectedTime);
+            createTimetableBox(getClassName(timetableData[0][i]), classRoom[i], getClassColor(timetableData[0][i]), selectedTime);
 
         }
     }
-    private int[] getClassColor(int classID) {
+    private int[] getClassColor(int courseID) {
         int rgb[][] = {
                 {255, 209, 102},
                 {94, 214, 182},
                 {239, 105, 136},
                 {67, 146, 216}
         };
-        return rgb[classID];
+        return rgb[courseID];
     }
 
-    private String getClassName(int classID) {
+    private String getClassName(int courseID) {
         String classNames[] = {"Mobile App", "Math", "Embedded Sys", "Sys Analysis"};
         //                          0           1           2                3
-        return classNames[classID];
+        return classNames[courseID];
     }
 
-    private void createTimetableBox(String className, String room, String tutor, int[] rgb, TextView selectedTime) {
-        String outputText = className + "\n" + room + "\n" + tutor;
+    private void createTimetableBox(String className, String room, int[] rgb, TextView selectedTime) {
+        String outputText = className + "\n" + room;
         selectedTime.setText(outputText);
         selectedTime.setBackgroundColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
     }
@@ -99,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

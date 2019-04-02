@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/teal"
-    app:titleTextColor="@color/textColor">
+    app:titleTextColor="@color/textColor"
+    app:popupTheme="@style/AppTheme">
 
     <TextView
         android:id="@+id/timetable_title"
