@@ -15,35 +15,29 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    DBHelper dbHelper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = findViewById(R.id.app_bar);
-        setSupportActionBar(toolbar);
-
         checkForSavedStudentID();
-        startTimetableActivity();
+        setContentView(R.layout.activity_main);
+        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
+        TextView title = (TextView) findViewById(R.id.timetable_title);
+        title.setText(mPrefs.getString("studentID", ""));
+
+//        Toolbar toolbar = findViewById(R.id.app_bar);
+//        setSupportActionBar(toolbar);
+
+        startTimetable();
 
 
     }
 
 
-    private void startTimetableActivity() {
-//      Set title bar text to student ID
-        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
-        TextView title = (TextView) findViewById(R.id.timetable_title);
-        title.setText(mPrefs.getString("studentID", ""));
+    private void startTimetable() {
 
         String weekDayIndex[] = {"mon_hr", "tues_hr", "wed_hr", "thurs_hr", "fri_hr"};
 
-        dbHelper = new DBHelper(this);
-
-
-        int timetableData[][]= {
+        int timetableData[][] = {
                 {0, 1, 0, 2, 3, 3, 1, 2, 1, 1}, // CourseID 0
                 {0, 1, 1, 1, 1, 2, 3, 3, 3, 4}, // Day      1
                 {5, 1, 2, 6, 8, 5, 1, 2, 6, 1}, // Time     2
@@ -71,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
     private int[] getClassColor(int courseID) {
         int rgb[][] = {
                 {255, 209, 102},
@@ -96,37 +91,34 @@ public class MainActivity extends AppCompatActivity {
     private void checkForSavedStudentID() {
         SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
 
-        if(mPrefs.getString("studentID", "").isEmpty()){
+        if (mPrefs.getString("studentID", "").isEmpty()) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.timetable_screen_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.timetable_screen_menu, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.changeStudentID:
+//                Intent login = new Intent(this, LoginActivity.class);
+//                startActivity(login);
+//                break;
+//            case R.id.editTimetable:
+//                Intent editTimetable = new Intent(this, EditTimetable.class);
+//                startActivity(editTimetable);
+//                break;
+//            default:
+//                //ignore
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.changeStudentID:
-                Intent login = new Intent(this, LoginActivity.class);
-                startActivity(login);
-                break;
-            case R.id.editTimetable:
-                Intent editTimetable = new Intent(this, EditTimetable.class);
-                startActivity(editTimetable);
-                break;
-            default:
-                //ignore
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-        private void toastMessage(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 }
