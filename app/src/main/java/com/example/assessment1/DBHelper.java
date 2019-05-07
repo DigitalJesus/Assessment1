@@ -8,19 +8,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "timetable.db";
+    private static final String DATABASE_NAME = "timetableDB.db";
     private static final int DATABASE_VERSION = 1;
-    public static final String STUDENT_TABLE_NAME = "student";
-    public static final String STUDENT_COLUMN_ID = "_id";
+    private static final String STUDENT_TABLE_NAME = "student";
+    private static final String STUDENT_COLUMN_ID = "_id";
     
-    public static final String CLASS_TABLE_NAME = "class";
-    public static final String CLASS_NAME = "className";
-    public static final String CLASS_COLUMN_ID = "_id";
-    public static final String CLASS_START_TIME = "startTime";
-    public static final String CLASS_DURATION = "duration";
-    public static final String CLASS_TUTOR = "tutor";
-    public static final String CLASS_COLOUR = "colour";
-    public static final String CLASS_DAY = "day";
+    private static final String CLASS_TABLE_NAME = "class";
+    private static final String CLASS_NAME = "className";
+    private static final String CLASS_COLUMN_ID = "_id";
+    private static final String CLASS_COLOUR = "colour";
+
+    private static final String CELL_TABLE_NAME = "cells";
+    private static final String CELL_COLUMN_ID = "_id";
+    private static final String CELL_START_TIME = "startTime";
+    private static final String CELL_DURATION = "duration";
+    private static final String CELL_TUTOR = "tutor";
+    private static final String CELL_DAY = "day";
+
 
 
 
@@ -34,13 +38,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 STUDENT_COLUMN_ID + " INTEGER PRIMARY KEY)"
         );
         db.execSQL("CREATE TABLE " + CLASS_TABLE_NAME +"(" +
-                CLASS_COLUMN_ID + "INTEGER PRIMARY KEY,  " +
+                CLASS_COLUMN_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,  " +
                 CLASS_NAME + "TEXT, " +
-                CLASS_START_TIME + "INTEGER, " +
-                CLASS_DURATION + " INTEGER, " +
-                CLASS_TUTOR + " TEXT, " +
-                CLASS_COLOUR + "TEXT, " +
-                CLASS_DAY + "INTEGER)"
+                CLASS_COLOUR + "TEXT" + ")"
+        );
+
+        db.execSQL("CREATE TABLE " + CELL_TABLE_NAME + "(" +
+                CELL_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                CELL_DAY + "INTEGER, " +
+                CELL_START_TIME + "INTEGER, " +
+                CELL_DURATION + "INTEGER, " +
+                CELL_TUTOR + "STRING" + ")"
         );
     }
 
@@ -48,52 +56,49 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + STUDENT_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + CLASS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE_NAME);
         onCreate(db);
     }
 
-    public boolean insertClass(String className, int startTime, int duration, String tutor, String colour, int day) {
-        SQLiteDatabase db = getWritableDatabase();
+    public boolean insertStudent(int studentID){
+        //Init Database objects
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        //Add student ID to contentValues
+        contentValues.put(STUDENT_COLUMN_ID, studentID);
+        //Save contentValues to table
+        db.insert(STUDENT_TABLE_NAME, null, contentValues);
+        return true;
+    }
+
+    public boolean insertClass(String className, String colour) {
+        //Init Database objects
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        //Add Class info to contentValues
         contentValues.put(CLASS_NAME, className);
-        contentValues.put(CLASS_START_TIME, startTime);
-        contentValues.put(CLASS_DURATION, duration);
-        contentValues.put(CLASS_TUTOR, tutor);
         contentValues.put(CLASS_COLOUR, colour);
-        contentValues.put(CLASS_DAY, day);
+
+        //save contentValues to class table
         db.insert(CLASS_TABLE_NAME, null, contentValues);
         return true;
     }
 
-    public boolean updatePerson(int id, String className, int startTime, int duration, String tutor, String colour, int day) {
+    public boolean insertCell (int day, int duration, int startTime, String tutor){
+        //Init Database objects
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(CLASS_NAME, className);
-        contentValues.put(CLASS_START_TIME, startTime);
-        contentValues.put(CLASS_DURATION, duration);
-        contentValues.put(CLASS_TUTOR, tutor);
-        contentValues.put(CLASS_COLOUR, colour);
-        contentValues.put(CLASS_DAY, day);
-        db.update(CLASS_TABLE_NAME, contentValues, CLASS_COLUMN_ID + " = ? ", new String[] { Integer.toString(id) } );
+
+        //Add Cell info to contentValues
+        contentValues.put(CELL_START_TIME, startTime);
+        contentValues.put(CELL_DURATION, duration);
+        contentValues.put(CELL_TUTOR, tutor);
+        contentValues.put(CELL_DAY, day);
+
+        //save contentValues to class table
+        db.insert(CELL_TABLE_NAME, null, contentValues);
         return true;
-    }
-
-    public Cursor getPerson(String className) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery( "SELECT * FROM " + CLASS_TABLE_NAME + " WHERE " +
-                CLASS_NAME + "=?", new String[] { className } );
-        return res;
-    }
-    public Cursor getAllClasses() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery( "SELECT * FROM " + CLASS_TABLE_NAME, null );
-        return res;
-    }
-
-    public Integer deleteClass(String className) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(CLASS_TABLE_NAME,
-                CLASS_NAME + " = ? ",
-                new String[] { className });
     }
 
 }

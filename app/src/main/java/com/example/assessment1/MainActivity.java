@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,11 +20,12 @@ public class MainActivity extends AppCompatActivity {
         checkForSavedStudentID();
         setContentView(R.layout.activity_main);
         SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
+
+        Toolbar toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
         TextView title = (TextView) findViewById(R.id.timetable_title);
         title.setText(mPrefs.getString("studentID", ""));
-
-//        Toolbar toolbar = findViewById(R.id.app_bar);
-//        setSupportActionBar(toolbar);
 
         startTimetable();
 
@@ -97,28 +97,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.timetable_screen_menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.changeStudentID:
-//                Intent login = new Intent(this, LoginActivity.class);
-//                startActivity(login);
-//                break;
-//            case R.id.editTimetable:
-//                Intent editTimetable = new Intent(this, EditTimetable.class);
-//                startActivity(editTimetable);
-//                break;
-//            default:
-//                //ignore
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.timetable_screen_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.changeStudentID:
+                Intent login = new Intent(this, LoginActivity.class);
+                startActivity(login);
+                break;
+            case R.id.editTimetable:
+                Intent editTimetable = new Intent(this, EditTimetable.class);
+                startActivity(editTimetable);
+                break;
+            default:
+                //ignore
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }
