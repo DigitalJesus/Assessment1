@@ -9,6 +9,9 @@
     <item
         android:id="@+id/editTimetable"
         android:title="@string/editTimetable"
-        app:showAsAction="never"></item>
+        app:showAsAction="never"
+        >
+
+    </item>
 
 </menu>

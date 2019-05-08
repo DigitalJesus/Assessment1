@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="teal">#23253A</color>
+    <color name="teal">#636BC0</color>
     <color name="textColor">#FFFCF2</color>
-    <color name="bgColor">#1E1A1D</color>
+    <color name="bgColor">#444444</color>
     <color name="textColorToolbar">#fff999</color>
     <color name="secondaryTextColour">#BAC4C2</color>
 </resources>
