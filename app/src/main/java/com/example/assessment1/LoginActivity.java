@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
             SharedPreferences.Editor mEditor = mPrefs.edit();
             mEditor.putString("studentID", loginBox.getText().toString()).apply();
+
             finish();
         } else{
             Toast.makeText(LoginActivity.this, "Please input your Student ID number", Toast.LENGTH_SHORT).show();
