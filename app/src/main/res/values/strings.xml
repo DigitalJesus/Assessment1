@@ -10,4 +10,5 @@
     <string name="times">8</string>
     <string name="changeStudentID">Change Student ID</string>
     <string name="editTimetable">Edit Timetable</string>
+    <string name="change_student_id">Change Student ID</string>
 </resources>

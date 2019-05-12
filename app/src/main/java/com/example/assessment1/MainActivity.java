@@ -7,44 +7,62 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.util.Objects;
+
+import static java.lang.Integer.*;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        checkForSavedStudentID();
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        checkForSavedStudentID();
-        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
-
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        setToolbarText(mPrefs.getString("studentID", "TableMaker"));
+        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
+        setToolbarText(getStudentID());
 
-        dbInsertData();
+//        dbInsertData();
 
-        buildTimetable();
+        buildTimetable(Integer.parseInt(Objects.requireNonNull(mPrefs.getString("studentID", ""))));
+    }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.changeStudentID:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.overflow_menu, menu);
+        return true;
     }
 
     private void dbInsertData() {
-        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
         DBHelper dbHelper = new DBHelper(this);
 
         String classNames[] = {"Mobile App", "Math", "Embedded Sys", "Sys Analysis"};
 
-        String rgb[] = {
+        String hex[] = {
                 "255, 209, 102",
                 "94, 214, 182",
                 "239, 105, 136",
@@ -58,68 +76,64 @@ public class MainActivity extends AppCompatActivity {
                 {1, 1, 3, 2, 2, 2, 1, 2, 2, 1}  // Duration 3
         };
 
-        int studentID = Integer.parseInt(Objects.requireNonNull(mPrefs.getString("studentID", "")));
+        dbHelper.insertCell(getStudentIDInt(), "HECK", "R202", "#F29559", 1, 2, 0);
+        dbHelper.insertCell(1234, "HECL", "R303", "#F24529",1, 2, 1);
+    }
 
-        dbHelper.insertStudent(studentID);
-
-        for (int i = 0; i < classNames.length; i++){
-            dbHelper.insertClass(classNames[i], rgb[i], studentID);
-        }
-
-        for (int i = 0; i < timetableData[1].length; i++){
-            dbHelper.insertCell(timetableData[1][i], timetableData[3][i], timetableData[2][i]);
-        }
+    private int getStudentIDInt() {
+        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
+        return Integer.parseInt(Objects.requireNonNull(mPrefs.getString("studentID", "")));
     }
 
 
+    private void buildTimetable(int studentID) {
+        DBHelper dbHelper = new DBHelper(this);
 
-    private void buildTimetable() {
+        Cell cell = dbHelper.queryCellData(studentID);
 
         String weekDayIndex[] = {"mon_hr", "tues_hr", "wed_hr", "thurs_hr", "fri_hr"};
 
+        for (int i = 0; i < 1; i++) {
 
+            String finalID = weekDayIndex[cell.getDay()] + cell.getStartTime();
 
-        String classRoom[] = {"C304", "C117", "B106", "B107", "C305", "T403", "C117", "B107", "T403", "T401"};
+            int resID = getResources().getIdentifier(finalID, "id", getPackageName());
+            TextView selectedTime = ((TextView) findViewById(resID));
 
-//        for (int i = 0; i < timetableData[0].length; i++) {
-//
-//            String finalID = weekDayIndex[timetableData[1][i]] + timetableData[2][i];
-//
-//            int resID = getResources().getIdentifier(finalID, "id", getPackageName());
-//            TextView selectedTime = ((TextView) findViewById(resID));
-//
-////          This for loop colours in the hours after a class depending on the duration of the class.
-//            for (int j = 0; j < (timetableData[3][i]); j++) {
-//                String modifiedIDString = weekDayIndex[timetableData[1][i]] + (timetableData[2][i] + (j));
-//                int durationID = getResources().getIdentifier(modifiedIDString, "id", getPackageName());
-//                TextView durationEdit = ((TextView) findViewById(durationID));
-//                createTimetableCell("", "", getClassColor(timetableData[0][i]), durationEdit);
-//            }
-//
-//            createTimetableCell(getClassName(timetableData[0][i]), classRoom[i], getClassColor(timetableData[0][i]), selectedTime);
-//
-//        }
+//          This for loop colours in the hours after a class depending on the duration of the class.
+            for (int j = 0; j < (cell.getDuration()); j++) {
+                String modifiedIDString = weekDayIndex[cell.getDay()] + (cell.getStartTime() + (j));
+                int durationID = getResources().getIdentifier(modifiedIDString, "id", getPackageName());
+                TextView durationEdit = ((TextView) findViewById(durationID));
+                createTimetableCell("", "", cell.getClassColour(), durationEdit);
+            }
+
+            createTimetableCell(cell.getClassName(), cell.getClassRoom(), cell.getClassColour(), selectedTime);
+        }
     }
 
+    private String getStudentID() {
+        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
+        return mPrefs.getString("studentID", "");
+    }
 
     private void setToolbarText(String methodInput) {
         TextView title = (TextView) findViewById(R.id.timetable_title);
         title.setText(methodInput);
     }
 
-    private void createTimetableCell(String className, String room, int[] rgb, TextView selectedTime) {
+    private void createTimetableCell(String className, String room, String hex, TextView selectedTime) {
         String outputText = className + "\n" + room;
         selectedTime.setText(outputText);
-        selectedTime.setBackgroundColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
+        selectedTime.setBackgroundColor(Color.parseColor(hex));
     }
 
     private void checkForSavedStudentID() {
         SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
 
-        if (mPrefs.getString("studentID", "").isEmpty()) {
+        if (mPrefs.getString("studentID", "").isEmpty() || Objects.equals(mPrefs.getString("studentID", ""), "")){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
     }
-
 }
