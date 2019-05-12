@@ -14,17 +14,18 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String STUDENT_COLUMN_ID = "_id";
     
     private static final String CLASS_TABLE_NAME = "class";
+    private static final String CLASS_STUDENT_ID = "studentID";
+    private static final String CLASS_ID = "_id";
     private static final String CLASS_NAME = "className";
-    private static final String CLASS_COLUMN_ID = "_id";
     private static final String CLASS_COLOUR = "colour";
 
     private static final String CELL_TABLE_NAME = "cells";
-    private static final String CELL_COLUMN_ID = "_id";
+    private static final String CELL_CLASS_ID = "classID";
+    private static final String CELL_ID = "_id";
     private static final String CELL_START_TIME = "startTime";
     private static final String CELL_DURATION = "duration";
     private static final String CELL_TUTOR = "tutor";
     private static final String CELL_DAY = "day";
-
 
 
 
@@ -38,17 +39,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 STUDENT_COLUMN_ID + " INTEGER PRIMARY KEY)"
         );
         db.execSQL("CREATE TABLE " + CLASS_TABLE_NAME +"(" +
-                CLASS_COLUMN_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,  " +
+                CLASS_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,  " +
                 CLASS_NAME + "TEXT, " +
-                CLASS_COLOUR + "TEXT" + ")"
+                CLASS_COLOUR + "TEXT," +
+                CLASS_STUDENT_ID + "INTEGER," +
+                "FOREIGN KEY("+CLASS_STUDENT_ID+") REFERENCES "+STUDENT_TABLE_NAME+"("+STUDENT_COLUMN_ID+")" +
+                ")"
         );
 
         db.execSQL("CREATE TABLE " + CELL_TABLE_NAME + "(" +
-                CELL_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                CELL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 CELL_DAY + "INTEGER, " +
                 CELL_START_TIME + "INTEGER, " +
                 CELL_DURATION + "INTEGER, " +
-                CELL_TUTOR + "STRING" + ")"
+                CELL_TUTOR + "STRING," +
+                CELL_CLASS_ID + "INTEGER," +
+                "FOREIGN KEY("+ CELL_CLASS_ID +") REFERENCES "+CLASS_TABLE_NAME+"("+CLASS_ID+")" + ")"
         );
     }
 
@@ -71,7 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean insertClass(String className, String colour) {
+    public boolean insertClass(String className, String colour, int studentID) {
         //Init Database objects
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -79,13 +85,14 @@ public class DBHelper extends SQLiteOpenHelper {
         //Add Class info to contentValues
         contentValues.put(CLASS_NAME, className);
         contentValues.put(CLASS_COLOUR, colour);
+        contentValues.put(CLASS_STUDENT_ID, studentID);
 
         //save contentValues to class table
         db.insert(CLASS_TABLE_NAME, null, contentValues);
         return true;
     }
 
-    public boolean insertCell (int day, int duration, int startTime, String tutor){
+    public boolean insertCell (int day, int duration, int startTime){
         //Init Database objects
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -93,9 +100,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //Add Cell info to contentValues
         contentValues.put(CELL_START_TIME, startTime);
         contentValues.put(CELL_DURATION, duration);
-        contentValues.put(CELL_TUTOR, tutor);
         contentValues.put(CELL_DAY, day);
-
         //save contentValues to class table
         db.insert(CELL_TABLE_NAME, null, contentValues);
         return true;
