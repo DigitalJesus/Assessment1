@@ -6,8 +6,11 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.security.PrivateKey;
+
+import static android.content.ContentValues.TAG;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -69,13 +72,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cell queryCellData(int studentID) {
+    public Cell queryCellData(int studentID, int recordsToSkip) {
         String query = "Select * FROM " + TIMETABLE_TABLE_NAME + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Cell cell = new Cell();
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
+            for (int i = 0; i < recordsToSkip; i++)
+                cursor.moveToNext();
+
             cell.setStudentID(Integer.parseInt(cursor.getString(0)));
             cell.setClassName(cursor.getString(1));
             cell.setClassRoom(cursor.getString(2));
@@ -83,6 +89,7 @@ public class DBHelper extends SQLiteOpenHelper {
             cell.setStartTime(Integer.parseInt(cursor.getString(4)));
             cell.setDuration(Integer.parseInt(cursor.getString(5)));
             cell.setDay(Integer.parseInt(cursor.getString(6)));
+
             cursor.close();
         } else {
             cell = null;
