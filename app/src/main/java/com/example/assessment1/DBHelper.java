@@ -2,20 +2,20 @@ package com.example.assessment1;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import java.security.PrivateKey;
-
 import static android.content.ContentValues.TAG;
+
 
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "timetable.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 1;
 
     //Assign names to table and attributes.
 
@@ -27,8 +27,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CELL_START_TIME = "startTime";
     private static final String CELL_CLASS_DURATION = "cellDuration";
     private static final String CELL_DAY = "day";
-
-
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME , null, DATABASE_VERSION);
@@ -45,7 +43,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 CELL_CLASS_DURATION + " INTEGER, " +
                 CELL_DAY + " INTEGER " +")"
         );
-
     }
 
     @Override
@@ -54,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertCell (int studentID, String className, String classRoom, String classColour, int startTime, int duration, int day){
+    public void insertCell (int studentID, String className, String classRoom, String classColour, int startTime, int duration, int day){
         //Init Database objects
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -69,27 +66,32 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(CELL_DAY, day);
         //save contentValues to class table
         db.insert(TIMETABLE_TABLE_NAME, null, contentValues);
-        return true;
     }
 
-    public Cell queryCellData(int studentID, int recordsToSkip) {
+    public Cell[] queryCellData(int studentID) {
         String query = "Select * FROM " + TIMETABLE_TABLE_NAME + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        Cell cell = new Cell();
+        int rowCount = cursor.getCount();
+        Cell[] cell = new Cell[rowCount];
+
+        for (int i = 0; i < cell.length; i++) {
+            cell[i] = new Cell();
+        }
+
+
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            for (int i = 0; i < recordsToSkip; i++)
+            for (int i = 0; i < cell.length; i++) {
+                cell[i].setStudentID(Integer.parseInt(cursor.getString(0)));
+                cell[i].setClassName(cursor.getString(1));
+                cell[i].setClassRoom(cursor.getString(2));
+                cell[i].setClassColour(cursor.getString(3));
+                cell[i].setStartTime(Integer.parseInt(cursor.getString(4)));
+                cell[i].setDuration(Integer.parseInt(cursor.getString(5)));
+                cell[i].setDay(Integer.parseInt(cursor.getString(6)));
                 cursor.moveToNext();
-
-            cell.setStudentID(Integer.parseInt(cursor.getString(0)));
-            cell.setClassName(cursor.getString(1));
-            cell.setClassRoom(cursor.getString(2));
-            cell.setClassColour(cursor.getString(3));
-            cell.setStartTime(Integer.parseInt(cursor.getString(4)));
-            cell.setDuration(Integer.parseInt(cursor.getString(5)));
-            cell.setDay(Integer.parseInt(cursor.getString(6)));
-
+            }
             cursor.close();
         } else {
             cell = null;
@@ -98,10 +100,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return cell;
     }
 
-    public long getTableLength(){
+    public int getTableLength(int studentID){
+        String query = "Select * FROM " + TIMETABLE_TABLE_NAME + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'";
         SQLiteDatabase db = this.getWritableDatabase();
-        return DatabaseUtils.queryNumEntries(db, TIMETABLE_TABLE_NAME);
+        Cursor cursor = db.rawQuery(query, null);
+        int rowCount = cursor.getCount();
+        return rowCount;
     }
+
 
 }
 

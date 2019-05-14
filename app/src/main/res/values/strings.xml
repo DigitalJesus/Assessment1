@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">TableMaker</string>
-    <string name="activity1_display_message">Enter Student ID:</string>
+    <string name="activity1_display_message">Enter Student ID</string>
     <string name="activity2_display_message">This is where the things will be</string>
     <string name="login_button">Login</string>
     <string name="back_button">Back to login</string>
@@ -11,4 +11,9 @@
     <string name="changeStudentID">Change Student ID</string>
     <string name="editTimetable">Edit Timetable</string>
     <string name="change_student_id">Change Student ID</string>
+    <string name="admin_login">Admin Login</string>
+    <string name="admin_login_password">Admin Login Password</string>
+    <string name="login">Login</string>
+    <string name="activity3_display_message">Admin Password</string>
+    <string name="admin_back_button">Back</string>
 </resources>
