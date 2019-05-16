@@ -8,14 +8,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class AdminEditClass extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_edit_class);
+        setContentView(R.layout.activity_admin_class_list);
 
         final DBHelper dbHelper = new DBHelper(this);
 
@@ -28,7 +27,7 @@ public class AdminEditClass extends AppCompatActivity {
         final String[] classList = dbHelper.queryStringAttributeForStudent("className", selectedStudentID);
 
         final ListView listView = (ListView)findViewById(R.id.listView_admin_class_editor);
-        final ArrayAdapter<String> classArray = new ArrayAdapter<>(this, R.layout.activity_listview, R.id.textView_admin_editor, classList);
+        final ArrayAdapter<String> classArray = new ArrayAdapter<>(this, R.layout.listview_item, R.id.textView_admin_editor, classList);
         listView.setAdapter(classArray);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

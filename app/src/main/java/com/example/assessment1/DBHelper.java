@@ -102,6 +102,19 @@ public class DBHelper extends SQLiteOpenHelper {
         return cell;
     }
 
+    public void updateCellRecord(int studentID, String className, String classRoom, int startTime, int duration, int day){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(CLASS_LOCATION, classRoom);
+        contentValues.put(CELL_START_TIME, startTime);
+        contentValues.put(CELL_CLASS_DURATION, duration);
+        contentValues.put(CELL_DAY, day);
+
+        db.update(TIMETABLE_TABLE_NAME, contentValues, STUDENT_ID+" = '" + studentID + "'" + " AND " + CLASS_NAME + " = " + "'" + className + "'", null);
+
+    }
+
     public int[] queryStudentIDs(){
         String query = "SELECT DISTINCT " + STUDENT_ID + " FROM " + TIMETABLE_TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();

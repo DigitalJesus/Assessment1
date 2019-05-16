@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkForSavedStudentID();
 
-        File database=getApplicationContext().getDatabasePath("timetable.db");
+        File database = getApplicationContext().getDatabasePath("timetable.db");
 
         if (!database.exists()) {
             dbInsertData();
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if (!getStudentID().isEmpty())
             buildTimetable(Integer.parseInt(Objects.requireNonNull(mPrefs.getString("studentID", null))));
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.changeStudentID) {
@@ -58,12 +60,93 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.overflow_menu, menu);
         return true;
     }
 
+    private void buildTimetable(int studentID) {
+        DBHelper dbHelper = new DBHelper(this);
+        Cell[] cell = dbHelper.queryCellData(studentID);
+
+        if (cell == null) {
+            Toast.makeText(this, "No timetable for this ID", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String[] weekDayIndex = {"mon_hr", "tues_hr", "wed_hr", "thurs_hr", "fri_hr"};
+
+        try {
+            for (int i = 0; i < dbHelper.getTableLengthForStudentID(getStudentIDInt()); i++) {
+                if (cell[i].getStudentID() == getStudentIDInt()) {
+                    String currentTextviewID = weekDayIndex[cell[i].getDay()] + cell[i].getStartTime();
+                    TextView selectedTime = ((TextView) findViewById(getResources().getIdentifier(currentTextviewID, "id", getPackageName())));
+
+                    createTimetableCell(cell[i].getClassName(), cell[i].getClassRoom(), cell[i].getClassColour(), selectedTime);
+
+//              This for loop colours in the hours after a class depending on the duration of the class.
+                    for (int j = 1; j < (cell[i].getDuration()); j++) {
+                        String modifiedIDString = weekDayIndex[cell[i].getDay()] + (cell[i].getStartTime() + (j));
+                        TextView durationEdit = ((TextView) findViewById(getResources().getIdentifier(modifiedIDString, "id", getPackageName())));
+
+                        try {
+                            createTimetableCell("", "", cell[i].getClassColour(), durationEdit);
+                        } catch (Exception e) {
+                            Log.d(TAG, "buildTimetable: Class duration extended beyond the end of the day");
+                            break;
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            Log.d(TAG, "Error while building timetable: " + dbHelper.getTableLengthForStudentID(getStudentIDInt()));
+        }
+
+
+    }
+
+    private void makeToast(String toastString) {
+        Toast.makeText(this, toastString, Toast.LENGTH_LONG).show();
+    }
+
+    private String getStudentID() {
+        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
+        return mPrefs.getString("studentID", "");
+    }
+
+    private void setToolbarText(String methodInput) {
+        TextView title = (TextView) findViewById(R.id.timetable_title);
+        title.setText(methodInput);
+    }
+
+    private void createTimetableCell(String className, String room, String hex, TextView selectedTime) {
+        String outputText = className + "\n" + room;
+        selectedTime.setText(outputText);
+        selectedTime.setBackgroundColor(Color.parseColor(hex));
+    }
+
+    private void checkForSavedStudentID() {
+        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
+
+        if (mPrefs.getString("studentID", "").isEmpty() || Objects.equals(mPrefs.getString("studentID", ""), "")) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void insertCell(int studentID, String className, String classRoom, String classColour, int startTime, int duration, int day) {
+        DBHelper dbHelper = new DBHelper(this);
+        dbHelper.insertCell(studentID, className, classRoom, classColour, startTime, duration, day);
+        dbHelper.close();
+    }
+
+    public int getStudentIDInt() {
+        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
+        return Integer.parseInt(Objects.requireNonNull(mPrefs.getString("studentID", "")));
+    }
 
     private void dbInsertData() {
 
@@ -125,86 +208,5 @@ public class MainActivity extends AppCompatActivity {
                     timetableData[1][i]);               //Day
 
         }
-    }
-
-    private void buildTimetable(int studentID) {
-        DBHelper dbHelper = new DBHelper(this);
-        Cell[] cell = dbHelper.queryCellData(studentID);
-
-        if(cell == null){
-            Toast.makeText(this, "No timetable for this ID", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        String[] weekDayIndex = {"mon_hr", "tues_hr", "wed_hr", "thurs_hr", "fri_hr"};
-
-        try {
-            for (int i = 0; i < dbHelper.getTableLengthForStudentID(getStudentIDInt()); i++) {
-            if (cell[i].getStudentID() == getStudentIDInt()) {
-                String currentTextviewID = weekDayIndex[cell[i].getDay()] + cell[i].getStartTime();
-                TextView selectedTime = ((TextView) findViewById(getResources().getIdentifier(currentTextviewID, "id", getPackageName())));
-
-                createTimetableCell(cell[i].getClassName(), cell[i].getClassRoom(), cell[i].getClassColour(), selectedTime);
-
-//              This for loop colours in the hours after a class depending on the duration of the class.
-                for (int j = 1; j < (cell[i].getDuration()); j++) {
-                    String modifiedIDString = weekDayIndex[cell[i].getDay()] + (cell[i].getStartTime() + (j));
-                    TextView durationEdit = ((TextView) findViewById(getResources().getIdentifier(modifiedIDString, "id", getPackageName())));
-
-                    try {
-                        createTimetableCell("", "", cell[i].getClassColour(), durationEdit);
-                    } catch (Exception e) {
-                        Log.d(TAG, "buildTimetable: Class duration extended beyond the end of the day");
-                        break;
-                    }
-                }
-            }
-        }
-
-        }catch (Exception e){
-            Log.d(TAG, "Harry: " + dbHelper.getTableLengthForStudentID(getStudentIDInt()));
-        }
-
-
-    }
-
-    private void makeToast(String toastString) {
-        Toast.makeText(this, toastString, Toast.LENGTH_LONG).show();
-    }
-
-    private String getStudentID() {
-        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
-        return mPrefs.getString("studentID", "");
-    }
-
-    private void setToolbarText(String methodInput) {
-        TextView title = (TextView) findViewById(R.id.timetable_title);
-        title.setText(methodInput);
-    }
-
-    private void createTimetableCell(String className, String room, String hex, TextView selectedTime) {
-        String outputText = className + "\n" + room;
-        selectedTime.setText(outputText);
-        selectedTime.setBackgroundColor(Color.parseColor(hex));
-    }
-
-    private void checkForSavedStudentID() {
-        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
-
-        if (mPrefs.getString("studentID", "").isEmpty() || Objects.equals(mPrefs.getString("studentID", ""), "")){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    public void insertCell(int studentID, String className, String classRoom, String classColour, int startTime, int duration, int day) {
-        DBHelper dbHelper = new DBHelper(this);
-        dbHelper.insertCell(studentID, className, classRoom, classColour, startTime, duration, day);
-        dbHelper.close();
-    }
-
-    public int getStudentIDInt() {
-        SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
-        return Integer.parseInt(Objects.requireNonNull(mPrefs.getString("studentID", "")));
     }
 }
