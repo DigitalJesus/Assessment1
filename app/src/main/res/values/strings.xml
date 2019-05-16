@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TableMaker</string>
     <string name="activity1_display_message">Enter Student ID</string>
-    <string name="activity2_display_message">This is where the things will be</string>
+    <string name="admin_topbar_display_message">Admin DB Editor</string>
     <string name="login_button">Login</string>
     <string name="back_button">Back to login</string>
     <string name="timetable_title">Timetable for </string>
@@ -16,4 +16,9 @@
     <string name="login">Login</string>
     <string name="activity3_display_message">Admin Password</string>
     <string name="admin_back_button">Back</string>
+    <string name="admin_edit_student_id">Student ID</string>
+    <string name="title_day">Day:</string>
+    <string name="title_time">Time:</string>
+    <string name="title_duration">Duration:</string>
+    <string name="title_roomNumber">Room Number:</string>
 </resources>

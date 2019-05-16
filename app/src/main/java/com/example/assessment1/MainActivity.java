@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 "#ED474A"
         };
 
+        //Harry's Timetable
         int studentID = 2173727;
 
         String[] classNames = {"Mobile App", "Math", "Embedded Sys", "Sys Analysis"};
@@ -86,6 +87,32 @@ public class MainActivity extends AppCompatActivity {
                 {0, 1, 1, 1, 1, 2, 3, 3, 3, 4}, // Day      1
                 {5, 1, 2, 6, 8, 5, 1, 2, 6, 1}, // Time     2
                 {1, 1, 3, 2, 2, 2, 1, 2, 2, 1}  // Duration 3
+        };
+
+        for (int i = 0; i < timetableData[0].length; i++) {
+            insertCell(studentID,                       //StudentID
+                    classNames[timetableData[0][i]],    //CourseName
+                    classRoom[i],                       //Classroom
+                    hex[timetableData[0][i]],           //Colour
+                    timetableData[2][i],                //Time
+                    timetableData[3][i],                //Duration
+                    timetableData[1][i]);               //Day
+
+        }
+
+        //Drew Mays' Timetable
+        studentID = 2160696;
+
+        classNames = new String[]{"Math", "Networking", "App Dev", "Sys Ana"};
+
+        classRoom = new String[]{"C304", "C117", "B106", "B107", "C305", "T403", "C117", "B107", "T403", "T401"};
+
+
+        timetableData = new int[][]{
+                {1, 2, 0, 2, 3, 3, 0, 1, 0, 0, 1}, // CourseID 0
+                {0, 0, 1, 1, 1, 2, 3, 3, 3, 4, 4}, // Day      1
+                {3, 5, 1, 2, 8, 5, 1, 2, 6, 1, 5}, // Time     2
+                {1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 2}  // Duration 3
         };
 
         for (int i = 0; i < timetableData[0].length; i++) {
@@ -112,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         String[] weekDayIndex = {"mon_hr", "tues_hr", "wed_hr", "thurs_hr", "fri_hr"};
 
         try {
-            for (int i = 0; i < dbHelper.getTableLength(getStudentIDInt()); i++) {
+            for (int i = 0; i < dbHelper.getTableLengthForStudentID(getStudentIDInt()); i++) {
             if (cell[i].getStudentID() == getStudentIDInt()) {
                 String currentTextviewID = weekDayIndex[cell[i].getDay()] + cell[i].getStartTime();
                 TextView selectedTime = ((TextView) findViewById(getResources().getIdentifier(currentTextviewID, "id", getPackageName())));
@@ -135,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         }catch (Exception e){
-            Log.d(TAG, "Harry: " + dbHelper.getTableLength(getStudentIDInt()));
+            Log.d(TAG, "Harry: " + dbHelper.getTableLengthForStudentID(getStudentIDInt()));
         }
 
 
@@ -170,13 +197,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void insertCell(int studentID, String className, String classRoom, String classColour, int startTime, int duration, int day) {
+    public void insertCell(int studentID, String className, String classRoom, String classColour, int startTime, int duration, int day) {
         DBHelper dbHelper = new DBHelper(this);
         dbHelper.insertCell(studentID, className, classRoom, classColour, startTime, duration, day);
-
+        dbHelper.close();
     }
 
-    private int getStudentIDInt() {
+    public int getStudentIDInt() {
         SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
         return Integer.parseInt(Objects.requireNonNull(mPrefs.getString("studentID", "")));
     }

@@ -75,13 +75,15 @@ public class DBHelper extends SQLiteOpenHelper {
         int rowCount = cursor.getCount();
         Cell[] cell = new Cell[rowCount];
 
-        for (int i = 0; i < cell.length; i++) {
+        //Loop through all cell objects and instantiate
+        for (int i = 0; i < cell.length; i++)
             cell[i] = new Cell();
-        }
 
-
-        if (cursor.moveToFirst()) {
+        //Move cursor to first item
+        if (cursor.moveToFirst()){
             cursor.moveToFirst();
+
+            //Loop through all items found in query and add to their own object in array
             for (int i = 0; i < cell.length; i++) {
                 cell[i].setStudentID(Integer.parseInt(cursor.getString(0)));
                 cell[i].setClassName(cursor.getString(1));
@@ -100,7 +102,83 @@ public class DBHelper extends SQLiteOpenHelper {
         return cell;
     }
 
-    public int getTableLength(int studentID){
+    public int[] queryStudentIDs(){
+        String query = "SELECT DISTINCT " + STUDENT_ID + " FROM " + TIMETABLE_TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Log.d(TAG, "queryStudentIDs: " + cursor.getCount());
+
+        int[] allStudentIDs = new int[cursor.getCount()];
+
+        if (cursor.moveToFirst())
+            cursor.moveToFirst();
+
+        for (int i = 0; i < cursor.getCount(); i++){
+            allStudentIDs[i] = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return allStudentIDs;
+    }
+
+    public String[] queryStringAttributeForStudent(String searchAttribute, int studentID){
+        String query = "SELECT DISTINCT " + searchAttribute + " FROM " + TIMETABLE_TABLE_NAME + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        String[] searchReturn = new String[cursor.getCount()];
+
+        if (cursor.moveToFirst())
+            cursor.moveToFirst();
+
+        for (int i = 0; i < cursor.getCount(); i++){
+            searchReturn[i] = cursor.getString(0);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return searchReturn;
+    }
+
+    public String[] queryCellDetails(String searchAttribute, int studentID, String className){
+        String query = "SELECT " + searchAttribute + " FROM " + TIMETABLE_TABLE_NAME
+                + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'"
+                + " AND " + CLASS_NAME + " = " + "'" + className + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        String[] searchReturn = new String[cursor.getCount()];
+
+        if (cursor.moveToFirst())
+            cursor.moveToFirst();
+
+        for (int i = 0; i < cursor.getCount(); i++){
+            if (searchAttribute.equals("classRoom")){
+                searchReturn[i] = cursor.getString(0);
+            }else{
+                searchReturn[i] = Integer.toString(cursor.getInt(0));
+            }
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return searchReturn;
+    }
+
+    public long getTableLength() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, TIMETABLE_TABLE_NAME);
+        db.close();
+        return count;
+    }
+
+
+    public int getTableLengthForStudentID(int studentID){
         String query = "Select * FROM " + TIMETABLE_TABLE_NAME + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);

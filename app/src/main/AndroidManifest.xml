@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".AdminEditor"></activity>
+        <activity android:name=".CellEditor"></activity>
+        <activity android:name=".AdminEditClass" />
+        <activity android:name=".AdminEditor" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" /> <!-- android:theme="@style/customToolbarStyle.NoActionBar" -->
