@@ -51,6 +51,7 @@ public class CellEditor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("ERROR TIME", "onClick: Save Pressed");
+                //TODO: Add data checking for new information so that any day/time/duration combo doesn't exceed the range of the timetable
 
 
             }

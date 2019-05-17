@@ -190,6 +190,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return count;
     }
 
+    public void deleteStudent(int studentID){
+        String argument = STUDENT_ID + " = " + "'" + studentID + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TIMETABLE_TABLE_NAME, argument, null);
+    }
+
 
     public int getTableLengthForStudentID(int studentID){
         String query = "Select * FROM " + TIMETABLE_TABLE_NAME + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'";
