@@ -11,17 +11,33 @@ import java.util.ArrayList;
 
 public class CellEditor extends AppCompatActivity {
 
+    private static final String TAG = "CELLEDITOR";
+    public int studentID;
+    public String className;
+
+    DBHelper dbHelper = new DBHelper(this);
+    final String[] globalDayList = dbHelper.queryCellDetails("day", studentID, className);
+    final String[] globalTimeList = dbHelper.queryCellDetails("startTime", studentID, className);
+    final String[] globalDurationList = dbHelper.queryCellDetails("cellDuration", studentID, className);
+    final String[] globalRoomList = dbHelper.queryCellDetails("classRoom", studentID, className);
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cell_editor);
         DBHelper dbHelper = new DBHelper(this);
 
+        Button btnSave = findViewById(R.id.btnSave);
+
         //Import Selections from previous classes.
         Bundle extras = getIntent().getExtras();
         assert extras != null;
         int selectedStudentID = extras.getInt("studentID");
         String selectedClass = extras.getString("className");
+
+        studentID = selectedStudentID;
+        className = selectedClass;
 
         //Get Data for each cell from DB
         final String[] dayList = dbHelper.queryCellDetails("day", selectedStudentID, selectedClass);
@@ -30,7 +46,7 @@ public class CellEditor extends AppCompatActivity {
         final String[] roomList = dbHelper.queryCellDetails("classRoom", selectedStudentID, selectedClass);
 
         //Init. ListView and CustomObject
-        ListView listView = (ListView)findViewById(R.id.listView_cell_editor);
+        ListView listView = findViewById(R.id.listView_cell_editor);
         final ArrayList<CustomArrayObject> objects = new ArrayList<>();
 
         //For each List item, add to the custom object the four data point for each cell
@@ -39,26 +55,50 @@ public class CellEditor extends AppCompatActivity {
             objects.add(item1);
         }
 
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveData();
+            }
+        });
+
         //Display the list using the custom adapter
         CustomAdapter customAdapter = new CustomAdapter(this, objects);
         listView.setAdapter(customAdapter);
 
         //Be kind, rewind.
         dbHelper.close();
-
-        Button btnSave = findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("ERROR TIME", "onClick: Save Pressed");
-                //TODO: Add data checking for new information so that any day/time/duration combo doesn't exceed the range of the timetable
-
-
-            }
-        });
     }
 
+    private void saveData() {
+        DBHelper dbHelper = new DBHelper(this);
 
+        for (int i = 0; i < globalDayList.length; i++) {
+            dbHelper.updateRow(studentID, className, Integer.parseInt(globalDayList[i]), globalRoomList[i], Integer.parseInt(globalTimeList[i]), Integer.parseInt(globalDurationList[i]), i);
+        }
+    }
 
+    public void modifyDayData(String updatedValue, int entryNumber){
+        Log.d(TAG, updatedValue + " " + entryNumber);
 
+        globalDayList[entryNumber] = updatedValue;
+    }
+
+    public void modifyDurationData(String updatedValue, int entryNumber){
+        Log.d(TAG, updatedValue + " " + entryNumber);
+
+        globalDurationList[entryNumber] = updatedValue;
+    }
+
+    public void modifyClassRoomData(String updatedValue, int entryNumber){
+        Log.d(TAG, updatedValue + " " + entryNumber);
+
+        globalRoomList[entryNumber] = updatedValue;
+    }
+
+    public void modifyStartTimeData(String updatedValue, int entryNumber){
+        Log.d(TAG, updatedValue + " " + entryNumber);
+
+        globalTimeList[entryNumber] = updatedValue;
+    }
 }

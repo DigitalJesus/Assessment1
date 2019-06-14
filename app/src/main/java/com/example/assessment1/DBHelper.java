@@ -2,30 +2,29 @@ package com.example.assessment1;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import java.security.PrivateKey;
+
 import static android.content.ContentValues.TAG;
 
 
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "timetable.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     //Assign names to table and attributes.
 
     private static final String TIMETABLE_TABLE_NAME = "timetable";
+    private static final String CELL_ID = "_id";
     private static final String STUDENT_ID = "studentID";
     private static final String CLASS_NAME = "className";
     private static final String CLASS_LOCATION = "classRoom";
     private static final String CLASS_COLOUR = "classColour";
     private static final String CELL_START_TIME = "startTime";
-    private static final String CELL_CLASS_DURATION = "cellDuration";
+    private static final String CELL_DURATION = "cellDuration";
     private static final String CELL_DAY = "day";
 
     public DBHelper(Context context) {
@@ -35,12 +34,13 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TIMETABLE_TABLE_NAME + "(" +
+                CELL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 STUDENT_ID + " INTEGER, " +
                 CLASS_NAME + " TEXT, " +
                 CLASS_LOCATION + " TEXT, " +
                 CLASS_COLOUR + " TEXT, " +
                 CELL_START_TIME + " INTEGER, " +
-                CELL_CLASS_DURATION + " INTEGER, " +
+                CELL_DURATION + " INTEGER, " +
                 CELL_DAY + " INTEGER " +")"
         );
     }
@@ -62,7 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(CLASS_LOCATION, classRoom);
         contentValues.put(CLASS_COLOUR, classColour);
         contentValues.put(CELL_START_TIME, startTime);
-        contentValues.put(CELL_CLASS_DURATION, duration);
+        contentValues.put(CELL_DURATION, duration);
         contentValues.put(CELL_DAY, day);
         //save contentValues to class table
         db.insert(TIMETABLE_TABLE_NAME, null, contentValues);
@@ -85,13 +85,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
             //Loop through all items found in query and add to their own object in array
             for (int i = 0; i < cell.length; i++) {
-                cell[i].setStudentID(Integer.parseInt(cursor.getString(0)));
-                cell[i].setClassName(cursor.getString(1));
-                cell[i].setClassRoom(cursor.getString(2));
-                cell[i].setClassColour(cursor.getString(3));
-                cell[i].setStartTime(Integer.parseInt(cursor.getString(4)));
-                cell[i].setDuration(Integer.parseInt(cursor.getString(5)));
-                cell[i].setDay(Integer.parseInt(cursor.getString(6)));
+                cell[i].setStudentID(Integer.parseInt(cursor.getString(1)));
+                cell[i].setClassName(cursor.getString(2));
+                cell[i].setClassRoom(cursor.getString(3));
+                cell[i].setClassColour(cursor.getString(4));
+                cell[i].setStartTime(Integer.parseInt(cursor.getString(5)));
+                cell[i].setDuration(Integer.parseInt(cursor.getString(6)));
+                cell[i].setDay(Integer.parseInt(cursor.getString(7)));
                 cursor.moveToNext();
             }
             cursor.close();
@@ -102,16 +102,31 @@ public class DBHelper extends SQLiteOpenHelper {
         return cell;
     }
 
-    public void updateCellRecord(int studentID, String className, String classRoom, int startTime, int duration, int day){
+    public void updateRow(int studentID, String className, int day, String classRoom, int startTime, int duration, int position){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        Cursor cursor = db.rawQuery(STUDENT_ID+" = '" + studentID + "'" + " AND " + CLASS_NAME + " = " + "'" + className + "'", null);
 
-        contentValues.put(CLASS_LOCATION, classRoom);
-        contentValues.put(CELL_START_TIME, startTime);
-        contentValues.put(CELL_CLASS_DURATION, duration);
-        contentValues.put(CELL_DAY, day);
+        Log.d(TAG, "number of records: " + cursor.getCount());
 
-        db.update(TIMETABLE_TABLE_NAME, contentValues, STUDENT_ID+" = '" + studentID + "'" + " AND " + CLASS_NAME + " = " + "'" + className + "'", null);
+        for (int i = 0; i < position; i++) {
+            cursor.moveToNext();
+        }
+        int modifiedID = cursor.getInt(0);
+
+        if (startTime >= 0)
+            contentValues.put(CELL_START_TIME, startTime);
+        if (duration >= 0)
+            contentValues.put(CELL_DURATION, duration);
+        if (classRoom != null && !classRoom.isEmpty())
+            contentValues.put(CLASS_LOCATION, classRoom);
+        if (day >= 0)
+            contentValues.put(CELL_DAY, day);
+
+        db.update(TIMETABLE_TABLE_NAME, contentValues, CELL_ID + " = " + modifiedID, null);
+
+        db.close();
+        cursor.close();
 
     }
 
@@ -181,13 +196,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return searchReturn;
-    }
-
-    public long getTableLength() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        long count = DatabaseUtils.queryNumEntries(db, TIMETABLE_TABLE_NAME);
-        db.close();
-        return count;
     }
 
     public void deleteStudent(int studentID){

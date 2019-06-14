@@ -33,41 +33,43 @@ public class LoginActivity extends AppCompatActivity {
         adminLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_admin_login);
-                Button adminLoginButton = findViewById(R.id.adminLoginButton);
-                Button adminBackButton = findViewById(R.id.adminBackButton);
-
-                adminBackButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
-
-                adminLoginButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText adminPassword = findViewById(R.id.adminInput);
-
-                        if (adminPassword.getText().toString().equals(ADMIN_PASSWORD)){
-                            Intent intent = new Intent(LoginActivity.this, AdminEditor.class);
-                            startActivity(intent);
-                            finish();
-                        }else{
-                            Toast.makeText(LoginActivity.this, "Incorrect Password", Toast.LENGTH_LONG).show();
-
-                        }
-
-                    }
-                });
+                adminPress();
             }
         });
 
     }
 
+    private void adminPress() {
+        setContentView(R.layout.activity_admin_login);
+        Button adminLoginButton = findViewById(R.id.adminLoginButton);
+        Button adminBackButton = findViewById(R.id.adminBackButton);
+
+        adminBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        adminLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText adminPassword = findViewById(R.id.adminInput);
+
+                if (adminPassword.getText().toString().equals(ADMIN_PASSWORD)){
+                    Intent intent = new Intent(LoginActivity.this, AdminEditor.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Toast.makeText(LoginActivity.this, "Incorrect Password", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        });
+    }
+
     public void loginPress() {
-
-
         EditText loginBox = findViewById(R.id.numberInput);
 
         if(!(loginBox.getText().toString().trim().isEmpty()) && Integer.parseInt(loginBox.getText().toString()) > 1){

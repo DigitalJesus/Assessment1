@@ -2,16 +2,16 @@ package com.example.assessment1;
 
 public class Cell {
 
-    public Cell() {
+    Cell() {
     }
 
-    public int studentID;
-    public String className;
-    public String classRoom;
-    public String classColour;
-    public int startTime;
-    public int duration;
-    public int day;
+    private int studentID;
+    private String className;
+    private String classRoom;
+    private String classColour;
+    private int startTime;
+    private int duration;
+    private int day;
 
     public int getStudentID() {
         return studentID;

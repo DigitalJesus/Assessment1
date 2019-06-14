@@ -30,14 +30,15 @@
 
     <!--Day Line-->
     <LinearLayout
-        android:layout_width="390dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="8dp"
+        android:id="@+id/dayLine"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="0dp"
         android:baselineAligned="false"
         android:weightSum="5"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,23 +83,20 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="407dp"
-        android:layout_height="634dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="0dp"
-        android:baselineAligned="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:weightSum="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/dayLine">
 
         <!--Hour Numbers-->
         <LinearLayout
-            android:layout_width="17dp"
+            android:layout_width="20dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="10">

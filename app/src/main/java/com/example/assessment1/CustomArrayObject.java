@@ -4,6 +4,8 @@ public class CustomArrayObject {
     private String prop1;
     private String prop2;
     private String prop3;
+    private String prop4;
+
 
     public void setProp1(String prop1) {
         this.prop1 = prop1;
@@ -20,8 +22,6 @@ public class CustomArrayObject {
     public void setProp4(String prop4) {
         this.prop4 = prop4;
     }
-
-    private String prop4;
 
     public CustomArrayObject(String prop1, String prop2, String prop3, String prop4) {
         this.prop1 = prop1;

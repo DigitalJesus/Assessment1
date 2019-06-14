@@ -12,12 +12,12 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
-
 public class CustomAdapter extends BaseAdapter {
+    public String TAG = "ADAPTERDEBUG";
 
     private LayoutInflater inflater;
     private ArrayList<CustomArrayObject> objects;
+    CellEditor cellEditor = new CellEditor();
 
     private class ViewHolder {
         EditText editTextDay;
@@ -62,27 +62,65 @@ public class CustomAdapter extends BaseAdapter {
         holder.editTextDuration.setText(objects.get(position).getProp3());
         holder.editTextRoom.setText(objects.get(position).getProp4());
 
-        holder.editTextDay.addTextChangedListener(new TextWatcher() {
+        holder.editTextDay.addTextChangedListener(new TextWatcher(){
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                ViewHolder holder = new ViewHolder();
-                //TODO: Learn how to pull data from the listview items.
+                if(!s.toString().isEmpty()){
+                    cellEditor.modifyDayData(s.toString(), position);
+                }
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s) {}
+        });
 
+        holder.editTextTime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().isEmpty()){
+                    cellEditor.modifyStartTimeData(s.toString(), position);
+                }
             }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        holder.editTextDuration.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().isEmpty()){
+                    cellEditor.modifyDurationData(s.toString(), position);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        holder.editTextRoom.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().isEmpty()){
+                    cellEditor.modifyClassRoomData(s.toString(), position);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
         return convertView;
-    }
-
-    private void cacheUpdatedValue(String updatedValue){
-
     }
 }
