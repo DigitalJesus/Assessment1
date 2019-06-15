@@ -48,35 +48,35 @@
             android:layout_width="50sp"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:text="Monday"
+            android:text="@string/monday"
             android:textColor="@color/secondaryTextColour"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="50sp"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:text="Tuesday"
+            android:text="@string/tuesday"
             android:textColor="@color/secondaryTextColour"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="50sp"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:text="Wednesday"
+            android:text="@string/wednesday"
             android:textColor="@color/secondaryTextColour"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="50sp"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:text="Thursday"
+            android:text="@string/thursday"
             android:textColor="@color/secondaryTextColour"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="50sp"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:text="Friday"
+            android:text="@string/friday"
             android:textColor="@color/secondaryTextColour"
             android:layout_weight="1"/>
     </LinearLayout>

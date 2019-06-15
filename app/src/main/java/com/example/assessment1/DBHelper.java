@@ -27,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CELL_DURATION = "cellDuration";
     private static final String CELL_DAY = "day";
 
-    public DBHelper(Context context) {
+    DBHelper(Context context) {
         super(context, DATABASE_NAME , null, DATABASE_VERSION);
     }
 
@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertCell (int studentID, String className, String classRoom, String classColour, int startTime, int duration, int day){
+    void insertCell(int studentID, String className, String classRoom, String classColour, int startTime, int duration, int day){
         //Init Database objects
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -68,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(TIMETABLE_TABLE_NAME, null, contentValues);
     }
 
-    public Cell[] queryCellData(int studentID) {
+    Cell[] queryCellData(int studentID) {
         String query = "Select * FROM " + TIMETABLE_TABLE_NAME + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -84,15 +84,15 @@ public class DBHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
             //Loop through all items found in query and add to their own object in array
-            for (int i = 0; i < cell.length; i++) {
-                cell[i].setRecordID(cursor.getInt(0));
-                cell[i].setStudentID(Integer.parseInt(cursor.getString(1)));
-                cell[i].setClassName(cursor.getString(2));
-                cell[i].setClassRoom(cursor.getString(3));
-                cell[i].setClassColour(cursor.getString(4));
-                cell[i].setStartTime(Integer.parseInt(cursor.getString(5)));
-                cell[i].setDuration(Integer.parseInt(cursor.getString(6)));
-                cell[i].setDay(Integer.parseInt(cursor.getString(7)));
+            for (Cell cell1 : cell) {
+                cell1.setRecordID(cursor.getInt(0));
+                cell1.setStudentID(Integer.parseInt(cursor.getString(1)));
+                cell1.setClassName(cursor.getString(2));
+                cell1.setClassRoom(cursor.getString(3));
+                cell1.setClassColour(cursor.getString(4));
+                cell1.setStartTime(Integer.parseInt(cursor.getString(5)));
+                cell1.setDuration(Integer.parseInt(cursor.getString(6)));
+                cell1.setDay(Integer.parseInt(cursor.getString(7)));
                 cursor.moveToNext();
             }
             cursor.close();
@@ -103,7 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return cell;
     }
 
-    public void updateRow(int studentID, String className, int day, String classRoom, int startTime, int duration, int position){
+    void updateRow(int studentID, String className, int day, String classRoom, int startTime, int duration, int position){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         String query = "SELECT "+ CELL_ID +
@@ -144,7 +144,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public int[] queryStudentIDs(){
+    int[] queryStudentIDs(){
         String query = "SELECT DISTINCT " + STUDENT_ID + " FROM " + TIMETABLE_TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -165,7 +165,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return allStudentIDs;
     }
 
-    public String[] queryStringAttributeForStudent(String searchAttribute, int studentID){
+    String[] queryStringAttributeForStudent(String searchAttribute, int studentID){
         String query = "SELECT DISTINCT " + searchAttribute + " FROM " + TIMETABLE_TABLE_NAME + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -185,7 +185,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return searchReturn;
     }
 
-    public String[] queryCellDetails(String searchAttribute, int studentID, String className){
+    String[] queryCellDetails(String searchAttribute, int studentID, String className){
         String query = "SELECT " + searchAttribute + " FROM " + TIMETABLE_TABLE_NAME
                 + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'"
                 + " AND " + CLASS_NAME + " = " + "'" + className + "'";
@@ -220,11 +220,12 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public int getTableLengthForStudentID(int studentID){
+    int getTableLengthForStudentID(int studentID){
         String query = "Select * FROM " + TIMETABLE_TABLE_NAME + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         int rowCount = cursor.getCount();
+        cursor.close();
         return rowCount;
     }
 

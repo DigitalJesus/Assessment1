@@ -13,11 +13,11 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter {
-    public String TAG = "ADAPTERDEBUG";
+    private String TAG = "ADAPTERDEBUG";
 
     private LayoutInflater inflater;
     private ArrayList<CustomArrayObject> objects;
-    CellEditor cellEditor = new CellEditor();
+    private CellEditor cellEditor = new CellEditor();
 
     private class ViewHolder {
         EditText editTextDay;
@@ -27,7 +27,7 @@ public class CustomAdapter extends BaseAdapter {
 
     }
 
-    public CustomAdapter(Context context, ArrayList<CustomArrayObject> objects) {
+    CustomAdapter(Context context, ArrayList<CustomArrayObject> objects) {
         inflater = LayoutInflater.from(context);
         this.objects = objects;
     }
@@ -45,14 +45,14 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if(convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.class_edit_listview_item, null);
-            holder.editTextDay = (EditText) convertView.findViewById(R.id.editText_day);
-            holder.editTextTime = (EditText) convertView.findViewById(R.id.editText_time);
-            holder.editTextDuration = (EditText) convertView.findViewById(R.id.editText_duration);
-            holder.editTextRoom = (EditText) convertView.findViewById(R.id.editText_roomNumber);
+            holder.editTextDay = convertView.findViewById(R.id.editText_day);
+            holder.editTextTime = convertView.findViewById(R.id.editText_time);
+            holder.editTextDuration = convertView.findViewById(R.id.editText_duration);
+            holder.editTextRoom = convertView.findViewById(R.id.editText_roomNumber);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
    }
 
    private void setToolbarText(String methodInput) {
-      TextView title = (TextView) findViewById(R.id.timetable_title);
+      TextView title = findViewById(R.id.timetable_title);
       title.setText(methodInput);
    }
 
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
    private void checkForSavedStudentID() {
       SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
 
-      if (mPrefs.getString("studentID", "").isEmpty() || Objects.equals(mPrefs.getString("studentID", ""), "")) {
+      if (Objects.requireNonNull(mPrefs.getString("studentID", "")).isEmpty() || Objects.equals(mPrefs.getString("studentID", ""), "")) {
          Intent intent = new Intent(this, LoginActivity.class);
          startActivity(intent);
       }

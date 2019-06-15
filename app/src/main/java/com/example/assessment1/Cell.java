@@ -11,7 +11,7 @@ public class Cell {
         return recordID;
     }
 
-    public void setRecordID(int recordID) {
+    void setRecordID(int recordID) {
         this.recordID = recordID;
     }
 
@@ -27,55 +27,55 @@ public class Cell {
         return studentID;
     }
 
-    public void setStudentID(int studentID) {
+    void setStudentID(int studentID) {
         this.studentID = studentID;
     }
 
-    public String getClassName() {
+    String getClassName() {
         return className;
     }
 
-    public void setClassName(String className) {
+    void setClassName(String className) {
         this.className = className;
     }
 
-    public String getClassRoom() {
+    String getClassRoom() {
         return classRoom;
     }
 
-    public void setClassRoom(String classRoom) {
+    void setClassRoom(String classRoom) {
         this.classRoom = classRoom;
     }
 
-    public String getClassColour() {
+    String getClassColour() {
         return classColour;
     }
 
-    public void setClassColour(String classColour) {
+    void setClassColour(String classColour) {
         this.classColour = classColour;
     }
 
-    public int getStartTime() {
+    int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(int startTime) {
+    void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public int getDuration() {
+    int getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    void setDuration(int duration) {
         this.duration = duration;
     }
 
-    public int getDay() {
+    int getDay() {
         return day;
     }
 
-    public void setDay(int day) {
+    void setDay(int day) {
         this.day = day;
     }
 }
