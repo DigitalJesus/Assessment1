@@ -194,55 +194,6 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/mon_hr1"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/mon_hr2"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/mon_hr3"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/mon_hr4"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/mon_hr5"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/mon_hr6"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/mon_hr7"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
                 android:id="@+id/mon_hr8"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -263,6 +214,55 @@
                 android:layout_weight="1"
                 android:padding="3dp" />
 
+            <TextView
+                android:id="@+id/mon_hr11"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr12"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr13"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr14"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr15"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr16"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/mon_hr17"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
 
         </LinearLayout>
 
@@ -276,55 +276,6 @@
             android:orientation="vertical"
             android:weightSum="10"
             app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/tues_hr1"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/tues_hr2"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/tues_hr3"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/tues_hr4"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/tues_hr5"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/tues_hr6"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/tues_hr7"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
 
             <TextView
                 android:id="@+id/tues_hr8"
@@ -347,6 +298,55 @@
                 android:layout_weight="1"
                 android:padding="3dp" />
 
+            <TextView
+                android:id="@+id/tues_hr11"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr12"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr13"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr14"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr15"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr16"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/tues_hr17"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
 
         </LinearLayout>
 
@@ -360,55 +360,6 @@
             android:orientation="vertical"
             android:weightSum="10"
             app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/wed_hr1"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/wed_hr2"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/wed_hr3"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/wed_hr4"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/wed_hr5"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/wed_hr6"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/wed_hr7"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
 
             <TextView
                 android:id="@+id/wed_hr8"
@@ -431,6 +382,55 @@
                 android:layout_weight="1"
                 android:padding="3dp" />
 
+            <TextView
+                android:id="@+id/wed_hr11"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr12"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr13"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr14"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr15"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr16"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/wed_hr17"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
 
         </LinearLayout>
 
@@ -444,55 +444,6 @@
             android:orientation="vertical"
             android:weightSum="10"
             app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/thurs_hr1"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/thurs_hr2"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/thurs_hr3"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/thurs_hr4"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/thurs_hr5"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/thurs_hr6"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/thurs_hr7"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
 
             <TextView
                 android:id="@+id/thurs_hr8"
@@ -515,6 +466,55 @@
                 android:layout_weight="1"
                 android:padding="3dp" />
 
+            <TextView
+                android:id="@+id/thurs_hr11"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr12"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr13"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr14"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr15"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr16"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/thurs_hr17"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
 
         </LinearLayout>
 
@@ -528,55 +528,6 @@
             android:orientation="vertical"
             android:weightSum="10"
             app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/fri_hr1"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/fri_hr2"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/fri_hr3"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/fri_hr4"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/fri_hr5"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/fri_hr6"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
-
-            <TextView
-                android:id="@+id/fri_hr7"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:padding="3dp" />
 
             <TextView
                 android:id="@+id/fri_hr8"
@@ -594,6 +545,55 @@
 
             <TextView
                 android:id="@+id/fri_hr10"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr11"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr12"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr13"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr14"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr15"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr16"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/fri_hr17"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_weight="1"

@@ -1,5 +1,6 @@
 package com.example.assessment1;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,27 +9,19 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CellEditor extends AppCompatActivity {
 
     private static final String TAG = "CELLEDITOR";
-    public int studentID;
-    public String className;
-
-    DBHelper dbHelper = new DBHelper(this);
-    final String[] globalDayList = dbHelper.queryCellDetails("day", studentID, className);
-    final String[] globalTimeList = dbHelper.queryCellDetails("startTime", studentID, className);
-    final String[] globalDurationList = dbHelper.queryCellDetails("cellDuration", studentID, className);
-    final String[] globalRoomList = dbHelper.queryCellDetails("classRoom", studentID, className);
-
+    public static int studentID;
+    public static String className;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cell_editor);
         DBHelper dbHelper = new DBHelper(this);
-
-        Button btnSave = findViewById(R.id.btnSave);
 
         //Import Selections from previous classes.
         Bundle extras = getIntent().getExtras();
@@ -38,6 +31,8 @@ public class CellEditor extends AppCompatActivity {
 
         studentID = selectedStudentID;
         className = selectedClass;
+
+        Log.d(TAG, "Set studentID: " + studentID + " and className: " + className);
 
         //Get Data for each cell from DB
         final String[] dayList = dbHelper.queryCellDetails("day", selectedStudentID, selectedClass);
@@ -55,12 +50,6 @@ public class CellEditor extends AppCompatActivity {
             objects.add(item1);
         }
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveData();
-            }
-        });
 
         //Display the list using the custom adapter
         CustomAdapter customAdapter = new CustomAdapter(this, objects);
@@ -70,35 +59,37 @@ public class CellEditor extends AppCompatActivity {
         dbHelper.close();
     }
 
-    private void saveData() {
-        DBHelper dbHelper = new DBHelper(this);
-
-        for (int i = 0; i < globalDayList.length; i++) {
-            dbHelper.updateRow(studentID, className, Integer.parseInt(globalDayList[i]), globalRoomList[i], Integer.parseInt(globalTimeList[i]), Integer.parseInt(globalDurationList[i]), i);
-        }
-    }
-
-    public void modifyDayData(String updatedValue, int entryNumber){
+    public void modifyDayData(Context context, String updatedValue, int entryNumber){
         Log.d(TAG, updatedValue + " " + entryNumber);
 
-        globalDayList[entryNumber] = updatedValue;
+        DBHelper dbHelper = new DBHelper(context);
+        Log.d(TAG, "modifyDayData: " + studentID+"::"+className+":::"+entryNumber);
+
+
+        dbHelper.updateRow(studentID, className, Integer.parseInt(updatedValue), null, -1, -1, entryNumber);
     }
 
-    public void modifyDurationData(String updatedValue, int entryNumber){
+    public void modifyDurationData(Context context, String updatedValue, int entryNumber){
         Log.d(TAG, updatedValue + " " + entryNumber);
 
-        globalDurationList[entryNumber] = updatedValue;
+        DBHelper dbHelper = new DBHelper(context);
+
+        dbHelper.updateRow(studentID, className, -1, null, -1, Integer.parseInt(updatedValue), entryNumber);
     }
 
-    public void modifyClassRoomData(String updatedValue, int entryNumber){
+    public void modifyClassRoomData(Context context, String updatedValue, int entryNumber){
         Log.d(TAG, updatedValue + " " + entryNumber);
 
-        globalRoomList[entryNumber] = updatedValue;
+        DBHelper dbHelper = new DBHelper(context);
+
+        dbHelper.updateRow(studentID, className, -1, updatedValue, -1, -1, entryNumber);
     }
 
-    public void modifyStartTimeData(String updatedValue, int entryNumber){
+    public void modifyStartTimeData(Context context, String updatedValue, int entryNumber){
         Log.d(TAG, updatedValue + " " + entryNumber);
 
-        globalTimeList[entryNumber] = updatedValue;
+        DBHelper dbHelper = new DBHelper(context);
+
+        dbHelper.updateRow(studentID, className, -1, null, Integer.parseInt(updatedValue), -1, entryNumber);
     }
 }

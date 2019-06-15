@@ -13,7 +13,7 @@ import static android.content.ContentValues.TAG;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "timetable.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     //Assign names to table and attributes.
 
@@ -85,6 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             //Loop through all items found in query and add to their own object in array
             for (int i = 0; i < cell.length; i++) {
+                cell[i].setRecordID(cursor.getInt(0));
                 cell[i].setStudentID(Integer.parseInt(cursor.getString(1)));
                 cell[i].setClassName(cursor.getString(2));
                 cell[i].setClassRoom(cursor.getString(3));
@@ -105,14 +106,27 @@ public class DBHelper extends SQLiteOpenHelper {
     public void updateRow(int studentID, String className, int day, String classRoom, int startTime, int duration, int position){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        Cursor cursor = db.rawQuery(STUDENT_ID+" = '" + studentID + "'" + " AND " + CLASS_NAME + " = " + "'" + className + "'", null);
+        String query = "SELECT "+ CELL_ID +
+                " AND " + CELL_START_TIME +
+                " AND " + CELL_DURATION +
+                " AND " + CLASS_LOCATION +
+                " AND " + CELL_DAY +
+                " FROM " + TIMETABLE_TABLE_NAME
+                + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'"
+                + " AND " + CLASS_NAME + " = " + "'" + className + "'";
+
+        Cursor cursor = db.rawQuery(query, null);
 
         Log.d(TAG, "number of records: " + cursor.getCount());
+        Log.d(TAG, "updateRow: " + position);
 
         for (int i = 0; i < position; i++) {
             cursor.moveToNext();
         }
-        int modifiedID = cursor.getInt(0);
+
+        int modifiedID = Integer.parseInt(cursor.getString(0));
+
+        Log.d(TAG, "updateRow: ID: "+modifiedID);
 
         if (startTime >= 0)
             contentValues.put(CELL_START_TIME, startTime);

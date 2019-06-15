@@ -13,7 +13,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 import static android.content.ContentValues.TAG;
 
@@ -138,6 +143,71 @@ public class MainActivity extends AppCompatActivity {
       return Integer.parseInt(Objects.requireNonNull(mPrefs.getString("studentID", "")));
    }
 
+   public Cell getNextClass(int studentID, Context context){
+      DBHelper dbHelper = new DBHelper(context);
+
+      Cell[] cell = dbHelper.queryCellData(studentID);
+
+      Date currentTime = Calendar.getInstance().getTime();
+
+      int currentDay = getCurrentDay(currentTime.toString());
+      Log.d(TAG, "currentDay: " + currentDay);
+
+      String strDateFormat = "hh a";
+      DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+      String formattedDate= dateFormat.format(currentTime);
+      int currentHour = getCurrentHour(formattedDate);
+
+      Log.d(TAG, "getNextClass: FormattedDate: "+formattedDate);
+      Log.d(TAG, "currentHour: " + currentHour);
+      Log.d(TAG, "numberOfCells: " +cell.length);
+
+      Cell nextClass = cell[0];
+
+      for (int i = 0; i < cell.length; i++) {
+         Log.d(TAG, "getNextClass: loop#:"+i);
+         if (cell[i].getDay() > currentDay && cell[i].getDay() < nextClass.getDay()){
+            Log.d(TAG, cell[i].getDay() + " is closer to " + currentDay + " than " + nextClass.getDay());
+            if (cell[i].getStartTime() > currentHour && cell[i].getStartTime() < nextClass.getStartTime()){
+               Log.d(TAG, cell[i].getStartTime() + " is closer to " + currentHour + " than " + nextClass.getStartTime());
+
+               nextClass = cell[i];
+            }
+         }
+
+      }
+      return nextClass;
+   }
+
+   private int getCurrentHour(String formattedDate) {
+      int temp = -1;
+      if (formattedDate.endsWith("am")){
+         temp = Integer.parseInt(formattedDate.split(" ")[0]);
+      }else if (formattedDate.endsWith("pm")){
+         temp = Integer.parseInt(formattedDate.split(" ")[0]) + 12;
+      }
+      return temp;
+   }
+
+   private int getCurrentDay(String currentTime) {
+      if (currentTime.startsWith("Mon")){
+         return 0;
+      }else if ( currentTime.startsWith("Tues")){
+         return 1;
+      }else if ( currentTime.startsWith("Wed")){
+         return 2;
+      }else if ( currentTime.startsWith("Thur")){
+         return 3;
+      }else if ( currentTime.startsWith("Fri")){
+         return 4;
+      }else if ( currentTime.startsWith("Sat")){
+         return 5;
+      }else if ( currentTime.startsWith("Sun")){
+         return 6;
+      }else
+         return -1;
+   }
+
    private void dbInsertData() {
 
       String[] hex = {
@@ -158,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
       int[][] timetableData = {
               {0, 1, 0, 2, 3, 3, 1, 2, 1, 1}, // CourseID 0
               {0, 1, 1, 1, 1, 2, 3, 3, 3, 4}, // Day      1
-              {5, 1, 2, 6, 8, 5, 1, 2, 6, 1}, // Time     2
+              {12, 8, 9, 13, 15, 12, 8, 9, 13, 8}, // Time     2
               {1, 1, 3, 2, 2, 2, 1, 2, 2, 1}  // Duration 3
       };
 
@@ -184,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
       timetableData = new int[][]{
               {1, 2, 0, 2, 3, 3, 0, 1, 0, 0, 1}, // CourseID 0
               {0, 0, 1, 1, 1, 2, 3, 3, 3, 4, 4}, // Day      1
-              {3, 5, 1, 2, 8, 5, 1, 2, 6, 1, 5}, // Time     2
+              {10, 12, 8, 9, 15, 12, 8, 9, 12, 8, 12}, // Time     2
               {1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 2}  // Duration 3
       };
 

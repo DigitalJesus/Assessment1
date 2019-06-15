@@ -61,15 +61,17 @@ public class CustomAdapter extends BaseAdapter {
         holder.editTextTime.setText(objects.get(position).getProp2());
         holder.editTextDuration.setText(objects.get(position).getProp3());
         holder.editTextRoom.setText(objects.get(position).getProp4());
-
-        holder.editTextDay.addTextChangedListener(new TextWatcher(){
+        final View finalConvertView = convertView;
+       holder.editTextDay.addTextChangedListener(new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 if(!s.toString().isEmpty()){
-                    cellEditor.modifyDayData(s.toString(), position);
+                    Log.d(TAG, "onTextChanged: pos: " + position); //TODO:: POSITION IS ALWAYS 0
+                    cellEditor.modifyDayData(finalConvertView.getContext(), s.toString(), position);
                 }
             }
 
@@ -84,7 +86,7 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!s.toString().isEmpty()){
-                    cellEditor.modifyStartTimeData(s.toString(), position);
+                    cellEditor.modifyStartTimeData(finalConvertView.getContext(), s.toString(), position);
                 }
             }
 
@@ -99,7 +101,7 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!s.toString().isEmpty()){
-                    cellEditor.modifyDurationData(s.toString(), position);
+                    cellEditor.modifyDurationData(finalConvertView.getContext(), s.toString(), position);
                 }
             }
 
@@ -114,7 +116,7 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!s.toString().isEmpty()){
-                    cellEditor.modifyClassRoomData(s.toString(), position);
+                    cellEditor.modifyClassRoomData(finalConvertView.getContext(), s.toString(), position);
                 }
             }
 

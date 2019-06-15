@@ -5,6 +5,16 @@ public class Cell {
     Cell() {
     }
 
+    private int recordID;
+
+    public int getRecordID() {
+        return recordID;
+    }
+
+    public void setRecordID(int recordID) {
+        this.recordID = recordID;
+    }
+
     private int studentID;
     private String className;
     private String classRoom;
