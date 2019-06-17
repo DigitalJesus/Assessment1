@@ -22,8 +22,6 @@ public class AdminEditClass extends AppCompatActivity {
         assert extras != null;
         final int selectedStudentID = extras.getInt("studentID");
 
-        Log.d("HECK", "studentEditor: " + selectedStudentID);
-
         final String[] classList = dbHelper.queryStringAttributeForStudent("className", selectedStudentID);
 
         final ListView listView = (ListView)findViewById(R.id.listView_admin_class_editor);

@@ -103,30 +103,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return cell;
     }
 
-    void updateRow(int studentID, String className, int day, String classRoom, int startTime, int duration, int position){
+    void updateRow(int id_, int day, String classRoom, int startTime, int duration){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        String query = "SELECT "+ CELL_ID +
-                " AND " + CELL_START_TIME +
-                " AND " + CELL_DURATION +
-                " AND " + CLASS_LOCATION +
-                " AND " + CELL_DAY +
-                " FROM " + TIMETABLE_TABLE_NAME
-                + " WHERE " + STUDENT_ID + " = " + "'" + studentID + "'"
-                + " AND " + CLASS_NAME + " = " + "'" + className + "'";
 
-        Cursor cursor = db.rawQuery(query, null);
-
-        Log.d(TAG, "number of records: " + cursor.getCount());
-        Log.d(TAG, "updateRow: " + position);
-
-        for (int i = 0; i < position; i++) {
-            cursor.moveToNext();
-        }
-
-        int modifiedID = Integer.parseInt(cursor.getString(0));
-
-        Log.d(TAG, "updateRow: ID: "+modifiedID);
+        Log.d(TAG, "updateRow: ID: "+id_);
 
         if (startTime >= 0)
             contentValues.put(CELL_START_TIME, startTime);
@@ -137,11 +118,8 @@ public class DBHelper extends SQLiteOpenHelper {
         if (day >= 0)
             contentValues.put(CELL_DAY, day);
 
-        db.update(TIMETABLE_TABLE_NAME, contentValues, CELL_ID + " = " + modifiedID, null);
-
+        db.update(TIMETABLE_TABLE_NAME, contentValues, CELL_ID + " = " + id_, null);
         db.close();
-        cursor.close();
-
     }
 
     int[] queryStudentIDs(){

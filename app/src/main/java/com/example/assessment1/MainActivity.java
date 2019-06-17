@@ -166,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
 
       for (int i = 0; i < cell.length; i++) {
          Log.d(TAG, "getNextClass: loop#:"+i);
-         if (cell[i].getDay() > currentDay && cell[i].getDay() < nextClass.getDay()){
+         if (cell[i].getDay() > currentDay || cell[i].getDay() < nextClass.getDay()){
             Log.d(TAG, cell[i].getDay() + " is closer to " + currentDay + " than " + nextClass.getDay());
-            if (cell[i].getStartTime() > currentHour && cell[i].getStartTime() < nextClass.getStartTime()){
+            if (cell[i].getStartTime() > currentHour || cell[i].getStartTime() < nextClass.getStartTime()){
                Log.d(TAG, cell[i].getStartTime() + " is closer to " + currentHour + " than " + nextClass.getStartTime());
 
                nextClass = cell[i];
