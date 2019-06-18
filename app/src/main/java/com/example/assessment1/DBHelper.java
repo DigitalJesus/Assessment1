@@ -208,5 +208,30 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    Cell getSingleRecord(String cellID) {
+        String query = "Select * FROM " + TIMETABLE_TABLE_NAME + " WHERE " + CELL_ID + " = " + "'" + cellID + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Cell cell = new Cell();
+
+        //Move cursor to first item
+        if (cursor.moveToFirst()){
+            cursor.moveToFirst();
+
+            cell.setRecordID(cursor.getInt(0));
+            cell.setStudentID(Integer.parseInt(cursor.getString(1)));
+            cell.setClassName(cursor.getString(2));
+            cell.setClassRoom(cursor.getString(3));
+            cell.setClassColour(cursor.getString(4));
+            cell.setStartTime(Integer.parseInt(cursor.getString(5)));
+            cell.setDuration(Integer.parseInt(cursor.getString(6)));
+            cell.setDay(Integer.parseInt(cursor.getString(7)));
+            cursor.close();
+        } else {
+            cell = null;
+        }
+        db.close();
+        return cell;
+    }
 }
 

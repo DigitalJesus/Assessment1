@@ -22,12 +22,14 @@
     <string name="title_duration">Duration:</string>
     <string name="title_roomNumber">Room Number:</string>
     <string name="btn_save">Save</string>
-    <string name="appwidget_text">Math</string>
-    <string name="appwidget_text_2">C402 – 12:00</string>
+    <string name="appwidget_text">No Class</string>
+    <string name="appwidget_text_2">Please Login</string>
     <string name="add_widget">Add widget</string>
     <string name="friday">Friday</string>
     <string name="thursday">Thursday</string>
     <string name="wednesday">Wednesday</string>
     <string name="tuesday">Tuesday</string>
     <string name="monday">Monday</string>
+    <string name="confirm">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

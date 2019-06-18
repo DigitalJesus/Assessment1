@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
       return true;
    }
 
-   private void buildTimetable(int studentID) {
+   void buildTimetable(int studentID) {
       DBHelper dbHelper = new DBHelper(this);
       Cell[] cell = dbHelper.queryCellData(studentID);
 
@@ -107,12 +108,12 @@ public class MainActivity extends AppCompatActivity {
       Toast.makeText(this, toastString, Toast.LENGTH_LONG).show();
    }
 
-   private String getStudentID() {
+   String getStudentID() {
       SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
       return mPrefs.getString("studentID", "");
    }
 
-   private void setToolbarText(String methodInput) {
+   void setToolbarText(String methodInput) {
       TextView title = findViewById(R.id.timetable_title);
       title.setText(methodInput);
    }
@@ -153,8 +154,7 @@ public class MainActivity extends AppCompatActivity {
       int currentDay = getCurrentDay(currentTime.toString());
       Log.d(TAG, "currentDay: " + currentDay);
 
-      String strDateFormat = "hh a";
-      DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+      DateFormat dateFormat = new SimpleDateFormat("hh a");
       String formattedDate= dateFormat.format(currentTime);
       int currentHour = getCurrentHour(formattedDate);
 
@@ -165,17 +165,17 @@ public class MainActivity extends AppCompatActivity {
       Cell nextClass = cell[0];
 
       for (int i = 0; i < cell.length; i++) {
-         Log.d(TAG, "getNextClass: loop#:"+i);
-         if (cell[i].getDay() > currentDay || cell[i].getDay() < nextClass.getDay()){
-            Log.d(TAG, cell[i].getDay() + " is closer to " + currentDay + " than " + nextClass.getDay());
-            if (cell[i].getStartTime() > currentHour || cell[i].getStartTime() < nextClass.getStartTime()){
-               Log.d(TAG, cell[i].getStartTime() + " is closer to " + currentHour + " than " + nextClass.getStartTime());
-
-               nextClass = cell[i];
+         for (int j = 0; j < currentDay; j++) {
+            for (int k = 0; k < 24; k++) {
+               if (cell[i].getStartTime() == k && cell[i].getDay() == j){
+                  nextClass = cell[i];
+                  break;
+               }
             }
          }
-
       }
+
+
       return nextClass;
    }
 
@@ -186,6 +186,14 @@ public class MainActivity extends AppCompatActivity {
       }else if (formattedDate.endsWith("pm")){
          temp = Integer.parseInt(formattedDate.split(" ")[0]) + 12;
       }
+
+      //Fixing above error where midday any midnight were swapped
+      if (temp == 12){
+         temp = 0;
+      }else if(temp == 24){
+         temp = 12;
+      }
+
       return temp;
    }
 

@@ -36,7 +36,7 @@ public class AdminEditor extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int selectedStudentID = (studentIDList[position]);
-                Intent intent = new Intent(AdminEditor.this, AdminEditClass.class);
+                Intent intent = new Intent(AdminEditor.this, EditTimetable.class);
                 intent.putExtra("studentID", selectedStudentID);
                 startActivity(intent);
                 dbHelper.close();
