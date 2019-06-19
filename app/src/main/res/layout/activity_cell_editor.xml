@@ -1,140 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
 
 
     <!--CellID, StudentID, Name, Room, Day, Time, Duration-->
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/cellID"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cellID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/studentID"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            />
+            >
+            <TextView
+                android:id="@+id/classNameTitle"
+                android:text="Course: "
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
-        <TextView
-            android:id="@+id/studentID"
-            android:layout_toEndOf="@+id/cellID"
-            android:layout_marginStart="100dp"
+            <EditText
+                android:id="@+id/className"
+                android:layout_alignParentEnd="true"
+                android:layout_width="150dp"
+                android:inputType="text"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:textSize="18sp"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/roomNameTitle"
+                android:text="Room: "
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/roomName"
+                android:layout_alignParentEnd="true"
+                android:layout_width="150dp"
+                android:inputType="text"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/classNameTitle"
-            android:text="Course: "
-            android:textSize="22sp"
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/dayTitle"
+                android:text="Day (0-4): "
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
-        <EditText
-            android:id="@+id/className"
-            android:layout_toEndOf="@id/classNameTitle"
-            android:layout_marginStart="100sp"
+            <EditText
+                android:id="@+id/dayofClass"
+                android:layout_alignParentEnd="true"
+                android:layout_width="150dp"
+                android:inputType="number"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/startTitle"
+                android:text="Start Time: (1 - 24)"
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/roomNameTitle"
-            android:text="Room: "
-            android:textSize="22sp"
+            <EditText
+                android:id="@+id/startTime"
+                android:layout_alignParentEnd="true"
+                android:layout_width="150dp"
+                android:inputType="number"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/durationTitle"
+                android:text="Duration (In Hours): "
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
-        <EditText
-            android:id="@+id/roomName"
-            android:layout_toEndOf="@id/roomNameTitle"
-            android:layout_marginStart="100sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/dayTitle"
-            android:text="Day (0-4): "
-            android:textSize="22sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
-        <EditText
-            android:id="@+id/dayofClass"
-            android:layout_toEndOf="@id/dayTitle"
-            android:layout_marginStart="100sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/duration"
+                android:layout_alignParentEnd="true"
+                android:layout_width="150dp"
+                android:inputType="number"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/startTitle"
-            android:text="Start Time: "
-            android:textSize="22sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+    </LinearLayout>
 
-        <EditText
-            android:id="@+id/startTime"
-            android:layout_toEndOf="@id/startTitle"
-            android:layout_marginStart="100sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/durationTitle"
-            android:text="Duration (In Hours): "
-            android:textSize="22sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
-        <EditText
-            android:id="@+id/duration"
-            android:layout_toEndOf="@id/durationTitle"
-            android:layout_marginStart="100sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        >
         <Button
             android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:padding="10dp"
+            android:layout_marginRight="30dp"
             android:textSize="18sp"
             android:text="@string/confirm"/>
 
@@ -143,6 +159,7 @@
             android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:textSize="18sp"
             android:text="@string/cancel"/>
 
@@ -151,4 +168,4 @@
 
 
 
-</LinearLayout>
+</RelativeLayout>

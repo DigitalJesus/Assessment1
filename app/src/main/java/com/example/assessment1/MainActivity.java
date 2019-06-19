@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -157,25 +158,61 @@ public class MainActivity extends AppCompatActivity {
       DateFormat dateFormat = new SimpleDateFormat("hh a");
       String formattedDate= dateFormat.format(currentTime);
       int currentHour = getCurrentHour(formattedDate);
+      
+      //TODO Find next class given currentDay and currentHour
 
-      Log.d(TAG, "getNextClass: FormattedDate: "+formattedDate);
-      Log.d(TAG, "currentHour: " + currentHour);
-      Log.d(TAG, "numberOfCells: " +cell.length);
+      ArrayList<Cell> classesInDay = new ArrayList<>();
 
-      Cell nextClass = cell[0];
+      if (currentHour >= 17){
+         currentDay++;          //If the current hour is past the end of the day, add 1 to the day so that tomorrow is scanned.
+      }
+      if (currentDay > 4){
+         currentDay = 0;       //If the current day is greater than 4 (the weekend) set day to monday.
+      }
 
       for (int i = 0; i < cell.length; i++) {
-         for (int j = 0; j < currentDay; j++) {
-            for (int k = 0; k < 24; k++) {
-               if (cell[i].getStartTime() == k && cell[i].getDay() == j){
-                  nextClass = cell[i];
-                  break;
-               }
-            }
+         if (cell[i].getDay() == currentDay){
+            Log.d(TAG, "getNextClass: cell " + i +" has a class today");
+            classesInDay.add(cell[i]);
          }
       }
 
+      Cell nextClass = classesInDay.get(0);
 
+      Log.d(TAG, "getNextClass: "+classesInDay.size());
+
+      //If today's classes are over, then search tomorrow.
+      if (classesInDay.size() == 1 && classesInDay.get(0).getStartTime() < currentHour){
+         classesInDay.clear();
+         currentDay++;
+         for (int i = 0; i < cell.length; i++) {
+            if (currentDay > 4){
+               currentDay = 0;       //If the current day is greater than 4 (the weekend) set day to monday.
+            }
+            if (cell[i].getDay() == currentDay){
+               Log.d(TAG, "getNextClass: cell " + i +" has a class today");
+               classesInDay.add(cell[i]);
+            }
+         }
+         nextClass = classesInDay.get(0); //ReApply default class for new day
+      }
+
+      for (int i = 1; i < (classesInDay.size()) ; i++) {
+         int diff1 = classesInDay.get(i).getStartTime() - currentHour-1; //Minus one to ensure that the next class if found, not the current one.
+         int diff2 = nextClass.getStartTime() - currentHour-1;
+
+         Log.d(TAG, "diff1: "+diff1+" diff2: "+diff2);
+
+         if (diff1 < 0){                     //This means that the Test cell is before the current hour
+
+         }else if(diff2 < 0){                //This means that the current choice is before the current hour
+            nextClass = classesInDay.get(i);
+         }else if (diff1 < diff2){           //This means that the test cell is closer to the current hour than the current choice
+            nextClass = classesInDay.get(i);
+         }else if (diff2 < diff1){           //This means that the current choice is closer to the current hour than the test cell
+
+         }
+      }
       return nextClass;
    }
 
@@ -204,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
          return 1;
       }else if ( currentTime.startsWith("Wed")){
          return 2;
-      }else if ( currentTime.startsWith("Thur")){
+      }else if ( currentTime.startsWith("Thu")){
          return 3;
       }else if ( currentTime.startsWith("Fri")){
          return 4;

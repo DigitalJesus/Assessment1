@@ -33,6 +33,7 @@ public class EditTimetable extends AppCompatActivity {
       Toolbar toolbar = findViewById(R.id.app_bar);
       setSupportActionBar(toolbar);
       Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+      Toast.makeText(this, "Tap a cell to Edit", Toast.LENGTH_LONG).show();
 
       Bundle extras = getIntent().getExtras();
       assert extras != null;
@@ -84,12 +85,15 @@ public class EditTimetable extends AppCompatActivity {
    }
 
    public void itemTapped(View view) {
-      Log.d(TAG, "itemTapped: tagis:"+view.getTag());
+      if (view.getTag() == null) {
+         Toast.makeText(this, "No class selected, try again :(", Toast.LENGTH_SHORT).show();
+      }else{
+         Log.d(TAG, "itemTapped: tagis:" + view.getTag());
 
-      Intent intent = new Intent(this, CellEditor.class);
-      intent.putExtra("id", view.getTag().toString());
-      startActivity(intent);
-
+         Intent intent = new Intent(this, CellEditor.class);
+         intent.putExtra("id", view.getTag().toString());
+         startActivity(intent);
+      }
    }
 
    private void createTimetableCell(String className, String room, String hex, TextView selectedTime) {
