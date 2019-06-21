@@ -134,6 +134,26 @@
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/colourTitle"
+                android:text="Cell Colour:  "
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <Button
+                android:id="@+id/colour"
+                android:layout_alignParentEnd="true"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+
 
     </LinearLayout>
 

@@ -13,7 +13,7 @@ import static android.content.ContentValues.TAG;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "timetable.db";
-    private static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 1;
 
     //Assign names to table and attributes.
 
@@ -103,7 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return cell;
     }
 
-    void updateRow(int id_, String className, int day, String classRoom, int startTime, int duration){
+    void updateRow(int id_, String className, int day, String classRoom, String colour, int startTime, int duration){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -111,6 +111,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(CELL_START_TIME, startTime);
         contentValues.put(CELL_DURATION, duration);
         contentValues.put(CLASS_LOCATION, classRoom);
+        contentValues.put(CLASS_COLOUR, colour);
         contentValues.put(CELL_DAY, day);
 
         db.update(TIMETABLE_TABLE_NAME, contentValues, CELL_ID + " = " + id_, null);

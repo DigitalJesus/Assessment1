@@ -85,15 +85,14 @@ public class EditTimetable extends AppCompatActivity {
    }
 
    public void itemTapped(View view) {
-      if (view.getTag() == null) {
-         Toast.makeText(this, "No class selected, try again :(", Toast.LENGTH_SHORT).show();
-      }else{
-         Log.d(TAG, "itemTapped: tagis:" + view.getTag());
+      Intent intent = new Intent(this, CellEditor.class);
 
-         Intent intent = new Intent(this, CellEditor.class);
+      if (view.getTag() == null)
+         intent.putExtra("id", "_newCell");
+      else
          intent.putExtra("id", view.getTag().toString());
-         startActivity(intent);
-      }
+
+      startActivity(intent);
    }
 
    private void createTimetableCell(String className, String room, String hex, TextView selectedTime) {

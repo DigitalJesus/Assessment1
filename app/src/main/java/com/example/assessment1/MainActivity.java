@@ -3,6 +3,7 @@ package com.example.assessment1;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
       setToolbarText(getStudentID());
 
       if (!getStudentID().isEmpty())
-         buildTimetable(getStudentIDInt());
+         buildTimetable(Integer.parseInt(getStudentID()));
    }
 
    @Override
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
       String[] weekDayIndex = {"mon_hr", "tues_hr", "wed_hr", "thurs_hr", "fri_hr"};
 
-      for (int i = 0; i < dbHelper.getTableLengthForStudentID(getStudentIDInt()); i++) {
+      for (int i = 0; i < dbHelper.getTableLengthForStudentID(Integer.parseInt(getStudentID())); i++) {
          String currentTextviewID = weekDayIndex[cell[i].getDay()] + cell[i].getStartTime();
          TextView selectedTime = (findViewById(getResources().getIdentifier(currentTextviewID, "id", getPackageName())));
 
@@ -102,15 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
          }
       }
-   }
-
-   private void makeToast(String toastString) {
-      Toast.makeText(this, toastString, Toast.LENGTH_LONG).show();
-   }
-
-   String getStudentID() {
-      SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
-      return mPrefs.getString("studentID", "");
    }
 
    void setToolbarText(String methodInput) {
@@ -139,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
       dbHelper.close();
    }
 
-   public int getStudentIDInt() {
+   String getStudentID() {
       SharedPreferences mPrefs = getSharedPreferences("label", Context.MODE_PRIVATE);
-      return Integer.parseInt(Objects.requireNonNull(mPrefs.getString("studentID", "")));
+      return mPrefs.getString("studentID", "");
    }
 
    public Cell getNextClass(int studentID, Context context){
@@ -165,7 +157,8 @@ public class MainActivity extends AppCompatActivity {
       boolean repeat = true;
       do {
          if (currentHour >= 17){
-            currentDay++;          //If the current hour is past the end of the day, add 1 to the day so that tomorrow is scanned.
+            currentDay++;  //If the current hour is past the end of the day, add 1 to the day so that tomorrow is scanned.
+            currentHour = 0;
          }
          if (currentDay > 4){
             currentDay = 0;       //If the current day is greater than 4 (the weekend) set day to monday.
