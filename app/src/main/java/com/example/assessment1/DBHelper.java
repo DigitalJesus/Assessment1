@@ -7,13 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.sql.SQLInput;
+
 import static android.content.ContentValues.TAG;
 
 
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "timetable.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
 
     //Assign names to table and attributes.
 
@@ -179,6 +181,14 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         db.close();
         return cell;
+    }
+
+    void deleteSingleRecord(String cellID){
+        String argument = CELL_ID + " = " + "'" + cellID + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TIMETABLE_TABLE_NAME, argument, null);
+
     }
 }
 

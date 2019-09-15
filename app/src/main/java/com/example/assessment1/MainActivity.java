@@ -1,5 +1,7 @@
 package com.example.assessment1;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -53,8 +55,17 @@ public class MainActivity extends AppCompatActivity {
 
       setToolbarText(getStudentID());
 
-      if (!getStudentID().isEmpty())
+      if (!getStudentID().isEmpty()) {
          buildTimetable(Integer.parseInt(getStudentID()));
+
+         //Update the widget whenever mainactivity is shown to the user.
+         Intent intent = new Intent(this, NextClassWidget.class);
+         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+         int[] ids = AppWidgetManager.getInstance(getApplication())
+                 .getAppWidgetIds(new ComponentName(getApplication(), NextClassWidget.class));
+         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+         sendBroadcast(intent);
+      }
    }
 
    @Override
@@ -142,43 +153,63 @@ public class MainActivity extends AppCompatActivity {
       Cell[] cell = dbHelper.queryCellData(studentID);
 
       Date currentTime = Calendar.getInstance().getTime();
-
-      int currentDay = getCurrentDay(currentTime.toString());
-      Log.d(TAG, "currentDay: " + currentDay);
-
       DateFormat dateFormat = new SimpleDateFormat("hh a");
       String formattedDate= dateFormat.format(currentTime);
+
+      int currentDay = getCurrentDay(currentTime.toString());
       int currentHour = getCurrentHour(formattedDate);
 
       ArrayList<Cell> classesInDay = new ArrayList<>();
 
-      Cell nextClass;
+      Cell nextClass = cell[0];
+      int loopCount = 0;
 
       boolean repeat = true;
       do {
-         if (currentHour >= 17){
+         loopCount++;
+         if (currentHour >= 17) {
             currentDay++;  //If the current hour is past the end of the day, add 1 to the day so that tomorrow is scanned.
-            currentHour = 0;
+            currentHour = 8;
          }
-         if (currentDay > 4){
-            currentDay = 0;       //If the current day is greater than 4 (the weekend) set day to monday.
+         if (currentDay > 4) {
+            currentDay = 0;
+            currentHour = 8;
          }
 
+         Log.d(TAG, "getNextClass: loop! \tDay: " + currentDay + "\t hour: " + currentHour);
+
          classesInDay.clear();
+
          for (int i = 0; i < cell.length; i++) {
             if (cell[i].getDay() == currentDay){
-               Log.d(TAG, "getNextClass: cell " + i +" has a class today");
                classesInDay.add(cell[i]);
             }
          }
+         if (classesInDay.size() == 0){
+            currentDay++;
+            currentHour = 8;
+            continue;
+         }
+         boolean classesAreAfterCurrentHour = false;
+         for (Cell cell1: classesInDay) {
+            if (cell1.getStartTime() > currentHour) {
+               classesAreAfterCurrentHour = true;
+               break;
+            }
+         }
+         if (!classesAreAfterCurrentHour){
+            currentDay++;
+            currentHour = 8;
+            continue;
+         }
 
          nextClass = classesInDay.get(0);
+         repeat = false;
 
          for (int i = 1; i < (classesInDay.size()) ; i++) {
-            int diff1 = classesInDay.get(i).getStartTime() - currentHour-1; //Minus one to ensure that the next class if found, not the current one.
-            int diff2 = nextClass.getStartTime() - currentHour-1;
+            int diff1 = classesInDay.get(i).getStartTime() - currentHour;
+            int diff2 = nextClass.getStartTime() - currentHour;
 
-            Log.d(TAG, "diff1: "+diff1+" diff2: "+diff2);
 
             if (diff1 < 0){                     //This means that the Test cell is before the current hour
 
@@ -191,12 +222,6 @@ public class MainActivity extends AppCompatActivity {
             }
          }
 
-         if (nextClass.getStartTime() < currentHour){
-            currentDay++;
-            currentHour = 0;
-         }else{
-            repeat = false;
-         }
       }while(repeat);
 
 
@@ -252,16 +277,16 @@ public class MainActivity extends AppCompatActivity {
       //Harry's Timetable
       int studentID = 2173727;
 
-      String[] classNames = {"Mobile App", "Math", "Embedded Sys", "Sys Analysis"};
+      String[] classNames = {"Proj. Management", "Cloud Computing", "Secure Coding", "Game Dev."};
 
-      String[] classRoom = {"C304", "C117", "B106", "B107", "C305", "T403", "C117", "B107", "T403", "T401"};
+      String[] classRoom = {"C305", "C117", "B101", "C117", "T304", "B107", "C303", "C117", "B102"};
 
 
       int[][] timetableData = {
-              {0, 1, 0, 2, 3, 3, 1, 2, 1, 1}, // CourseID 0
-              {0, 1, 1, 1, 1, 2, 3, 3, 3, 4}, // Day      1
-              {12, 8, 9, 13, 15, 12, 8, 9, 13, 8}, // Time     2
-              {1, 1, 3, 2, 2, 2, 1, 2, 2, 1}  // Duration 3
+              {0, 1, 2, 2, 0, 1, 0, 3, 3}, // CourseID 0
+              {0, 0, 0, 0, 1, 1, 1, 2, 2}, // Day      1
+              {9, 12, 13, 16, 9, 12, 15, 12, 14}, // Time     2
+              {1, 1, 3, 1, 2, 3, 1, 1, 3}  // Duration 3
       };
 
       for (int i = 0; i < timetableData[0].length; i++) {
@@ -278,16 +303,16 @@ public class MainActivity extends AppCompatActivity {
       //Drew Mays' Timetable
       studentID = 2160696;
 
-      classNames = new String[]{"Math", "Networking", "App Dev", "Sys Ana"};
+      classNames = new String[]{"Communications", "Data Science", "Secure Testing", "Game Dev."};
 
-      classRoom = new String[]{"C304", "C117", "B106", "B107", "C305", "T403", "C117", "B107", "T403", "T401", "B107"};
+      classRoom = new String[]{"B314", "C117", "C302", "B102", "B101", "C117", "B102", "C305", "C302"};
 
 
       timetableData = new int[][]{
-              {1, 2, 0, 2, 3, 3, 0, 1, 0, 0, 1}, // CourseID 0
-              {0, 0, 1, 1, 1, 2, 3, 3, 3, 4, 4}, // Day      1
-              {10, 12, 8, 9, 15, 12, 8, 9, 12, 8, 12}, // Time     2
-              {1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 2}  // Duration 3
+              {0, 2, 1, 1, 2, 3, 3, 0, 1}, // CourseID 0
+              {0, 0, 1, 1, 2, 2, 2, 3, 4}, // Day      1
+              {10, 16, 8, 11, 9, 12, 14, 8, 8}, // Time     2
+              {3, 1, 1, 3, 3, 1, 3, 2, 1}  // Duration 3
       };
 
       for (int i = 0; i < timetableData[0].length; i++) {

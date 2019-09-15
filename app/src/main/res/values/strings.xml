@@ -32,4 +32,5 @@
     <string name="monday">Monday</string>
     <string name="confirm">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="delete_cell">Delete Cell</string>
 </resources>

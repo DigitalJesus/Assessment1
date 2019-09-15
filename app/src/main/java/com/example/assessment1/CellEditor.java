@@ -21,10 +21,12 @@ public class CellEditor extends AppCompatActivity {
 
       Button cancel = findViewById(R.id.cancelBtn);
       Button save = findViewById(R.id.saveBtn);
+      Button delete = findViewById(R.id.deleteBtn);
 
       Bundle extras = getIntent().getExtras();
       assert extras != null;
       final String cellID = extras.getString("id");
+      final int studentIDExtra = extras.getInt("studentID");
       final DBHelper dbHelper = new DBHelper(this);
 
       final Cell cell;
@@ -61,6 +63,15 @@ public class CellEditor extends AppCompatActivity {
          }
       });
 
+      delete.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            dbHelper.deleteSingleRecord(cellID);
+            dbHelper.close();
+            finish();
+         }
+      });
+
       cancel.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
@@ -72,7 +83,7 @@ public class CellEditor extends AppCompatActivity {
          @Override
          public void onClick(View v) {
             if (cellID.equals("_newCell")){
-               dbHelper.insertCell(Integer.parseInt(studentID.getText().toString()),
+               dbHelper.insertCell(studentIDExtra,
                        className.getText().toString(),
                        roomName.getText().toString(),
                        colour.getText().toString(),

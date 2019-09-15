@@ -19,6 +19,8 @@ import static android.content.ContentValues.TAG;
 
 public class EditTimetable extends AppCompatActivity {
 
+   int globalStudentID;
+
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class EditTimetable extends AppCompatActivity {
       Bundle extras = getIntent().getExtras();
       assert extras != null;
       int selectedStudentID = extras.getInt("studentID");
+      globalStudentID = selectedStudentID;
 
       setToolbarText(Integer.toString(selectedStudentID));
 
@@ -91,6 +94,8 @@ public class EditTimetable extends AppCompatActivity {
          intent.putExtra("id", "_newCell");
       else
          intent.putExtra("id", view.getTag().toString());
+
+      intent.putExtra("studentID", globalStudentID);
 
       startActivity(intent);
    }

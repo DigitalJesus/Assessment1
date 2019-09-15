@@ -7,13 +7,7 @@ public class Cell {
 
     private int recordID;
 
-    public int getRecordID() {
-        return recordID;
-    }
 
-    void setRecordID(int recordID) {
-        this.recordID = recordID;
-    }
 
     private int studentID;
     private String className;
@@ -22,6 +16,14 @@ public class Cell {
     private int startTime;
     private int duration;
     private int day;
+
+    public int getRecordID() {
+        return recordID;
+    }
+
+    void setRecordID(int recordID) {
+        this.recordID = recordID;
+    }
 
     public int getStudentID() {
         return studentID;
